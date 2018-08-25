@@ -1,10 +1,16 @@
-const { migrate } = require('postgres-migrations');
+const { createDb, migrate } = require('postgres-migrations');
 const Sequelize = require('sequelize');
+
+const host = '127.0.0.1';
+const port = 5432;
+const database = 'postgres';
+const user = 'postgres';
+const password = '';
 
 const run = async () => {
   try {
-    const sequelize = new Sequelize('database', 'username', 'password', {
-      host: '127.0.0.1',
+    const sequelize = new Sequelize(database, user, password, {
+      host,
       dialect: 'postgres',
 
       pool: {
@@ -18,17 +24,24 @@ const run = async () => {
       operatorsAliases: false
     });
 
-    await sequelize.sync({ logging: false });
+    await sequelize.sync({ logging: true });
 
-    const db = {
-      database: 'postgres',
-      user: 'postgres',
-      password: '',
-      host: '127.0.0.1',
-      port: 5432,
-    };
+    await createDb(database, {
+      defaultDatabase: 'postgres', // optional, default: 'postgres'
+      user,
+      password,
+      host,
+      port,
+    })
 
-    await migrate(db, './migrations');
+    await migrate({
+      database,
+      user,
+      password,
+      host,
+      port,
+    }, './migrations');
+
     console.log('Migrations ran successfully');
   } catch (e) {
     console.error('Migrations failed', e);
