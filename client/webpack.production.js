@@ -10,7 +10,7 @@ const productionConfig = {
     main: path.resolve(__dirname, './src/main.js'),
   },
   output: {
-    path: path.resolve(__dirname, '../dist/'),
+    path: path.resolve(__dirname, './dist'),
     filename: '[name].js',
     publicPath: '/',
     chunkFilename: "[id].[hash].js"

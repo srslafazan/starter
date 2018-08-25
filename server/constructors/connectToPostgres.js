@@ -8,13 +8,15 @@ const connectToPostgres = async (
   interval = 1000,
 ) => {
   if (attempts === 0) throw new Error('Failed to connect');
+
+  const client = new Client({ connectionString });
+
   try {
-    const client = new Client({ connectionString });
     await client.connect();
     return client;
   } catch (e) {
     await sleep(interval);
-    return connect(connectionString, attempts - 1, interval);
+    return connectToPostgres(connectionString, attempts - 1, interval);
   }
 };
 

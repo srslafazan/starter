@@ -8,8 +8,8 @@
   "scripts": {
     "dev": "webpack-dev-server --host 0.0.0.0 --hot --inline --content-base=dist --history-api-fallback",
     "start": "yarn dev",
-    "clean": "rm -rf dist/*",
-    "build": "npm run clean && NODE_ENV=production webpack --config webpack.production.js",
+    "clean": "rm -rf .dist/*",
+    "build": "yarn clean && NODE_ENV=production webpack --config webpack.production.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -26,8 +26,6 @@
     "@babel/preset-flow": "^7.0.0-beta.54",
     "@babel/preset-react": "^7.0.0-beta.54",
     "@babel/runtime": "^7.0.0-beta.54",
-    "@material-ui/core": "^1.5.0",
-    "@material-ui/icons": "^2.0.2",
     "axios": "^0.18.0",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",

@@ -3,23 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios'
 import * as log from 'loglevel'
 
-import { withStyles } from 'material-ui/styles';
-
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Grid from 'material-ui/Grid';
-import TextField from 'material-ui/TextField';
-import Card, { CardContent, CardHeader, CardMedia } from 'material-ui/Card';
-
 import { Link, withRouter } from 'react-router-dom'
-
-
-const styles = {
-  root: {},
-  input: {
-    width: '50%',
-  }
-}
 
 
 class SignupForm extends Component {
@@ -32,35 +16,27 @@ class SignupForm extends Component {
     const { classes, history } = this.props;
     const { email, password } = this.state;
     console.log('sign up');
-    axios.post('/users', { email }).then((user) => {
-      history.push('/')
-    });
+    // axios.post('/users', { email }).then((user) => {
+    //   history.push('/')
+    // });
   }
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <TextField
-          label="Email"
+      <div>
+        Email
+        <input
           type="text"
-          margin="normal"
-          className={classes.input}
           onChange={(e) => this.setState({ email: e.target.value })}
         />
         <br />
-        <TextField
-          label="Password"
+        Password
+        <input
           type="password"
-          margin="normal"
-          className={classes.input}
           onChange={(e) => this.setState({ password: e.target.value })}
         />
-        <Button
-          variant="raised"
-          color="secondary"
+        <button
           children={"Sign Up"}
-          style={{ display: 'block' }}
           onClick={() => this.signUp()}
         />
         <br />
@@ -70,4 +46,4 @@ class SignupForm extends Component {
   }
 }
 
-export default withStyles(styles)(withRouter(SignupForm));
+export default withRouter(SignupForm);
