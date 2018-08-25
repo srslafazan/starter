@@ -1,7 +1,5 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import axios from 'axios'
-import * as log from 'loglevel'
 
 import { withStyles } from 'material-ui/styles';
 
@@ -13,32 +11,16 @@ import Card, { CardContent, CardHeader, CardMedia } from 'material-ui/Card';
 
 import { Link, withRouter } from 'react-router-dom'
 
-import Header from '../components/Header'
+import Header from '@/components/Header'
+import LoginForm from '@/components/LoginForm'
 
 
 const styles = {
-  root: {
-  },
-  input: {
-    width: '50%',
-  }
+  root: {},
 }
 
 
-class Login extends React.Component {
-
-  dom = {
-    email: null,
-    password: null,
-  }
-
-  logIn() {
-    const email = this.dom.email.value;
-    const password = this.dom.password.value;
-    console.log('do something with email and password');
-    this.props.history.push('/')
-  }
-
+class LoginPage extends Component {
   render() {
     const { classes } = this.props;
     
@@ -49,33 +31,7 @@ class Login extends React.Component {
         <Header title="Log In" />
         <Grid container spacing={24} justify="center">
           <Grid item xs={12} sm={6}>
-            <TextField
-              ref={c => (this.dom.email = c)}
-              id="email"
-              label="Email"
-              type="text"
-              margin="normal"
-              className={classes.input}
-            />
-            <br />
-            <TextField
-              ref={c => (this.dom.password = c)}
-              id="password"
-              label="Password"
-              type="password"
-              className={classes.textField}
-              margin="normal"
-              className={classes.input}
-            />
-            <Button
-              style={{ display: 'block' }}
-              variant="raised"
-              color="secondary"
-              onClick={() => this.logIn()}
-              children={"Log In"}
-            />
-            <br />
-            <Link to="/signup">Want to Sign up?</Link>
+            <LoginForm />
           </Grid>
         </Grid>
       </div>
@@ -83,4 +39,4 @@ class Login extends React.Component {
   }
 }
 
-export default withStyles(styles)(withRouter(Login))
+export default withStyles(styles)(withRouter(LoginPage))

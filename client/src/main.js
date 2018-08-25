@@ -2,25 +2,43 @@ import 'normalize.css'
 
 import React from 'react'
 import * as log from 'loglevel'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+
+import {
+  BrowserRouter,
+  Link,
+  Redirect,
+  Route,
+} from 'react-router-dom'
+
 import { render } from 'react-dom'
 import { Button } from 'material-ui'
 
-import Signup from './pages/Signup'
-import Login from './pages/Login'
+import Signup from '@/pages/Signup'
+import Login from '@/pages/Login'
+import Home from '@/pages/Home'
 
 
 const logLevel = process.env.NODE_ENV === 'development' ? log.levels.DEBUG : log.levels.INFO
 
 log.setLevel(logLevel, true)
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => {
+    const authenticated = true;  /* TODO - auth */
+    return (authenticated) ? <Component {...props} {...rest} /> : <Redirect to='/login' />
+    }}
+  />
+);
+
+
+
 function App() {
   return (
     <BrowserRouter>
       <div>
-        <Route exact path="/" component={Signup} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/signup" component={Signup} />
+        <PrivateRoute exact path="/" component={Home} />
       </div>
     </BrowserRouter>
   )

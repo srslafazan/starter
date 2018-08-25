@@ -78,9 +78,9 @@ class MenuAppBar extends React.Component {
                     horizontal: 'right',
                   }}
                   open={open}
-                  onClose={this.handleClose}
+                  onClose={() => this.setState({ anchorEl: null })}
                 >
-                  <MenuItem onClick={() => console.log('implement action here')}>Something</MenuItem>
+                  <MenuItem onClick={() => console.log('implement action here')}>Option</MenuItem>
                 </Menu>
               </div>
             )}

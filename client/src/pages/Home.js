@@ -12,7 +12,6 @@ import Card, { CardContent, CardHeader, CardMedia } from 'material-ui/Card';
 import { Link, withRouter } from 'react-router-dom'
 
 import Header from '@/components/Header';
-import SignupForm from '@/components/SignupForm';
 
 
 const styles = {
@@ -20,7 +19,7 @@ const styles = {
 }
 
 
-class SignupPage extends Component {
+class HomePage extends Component {
   render() {
     const { classes, history } = this.props;
     
@@ -31,7 +30,7 @@ class SignupPage extends Component {
         <Header title="Sign up" />
         <Grid container spacing={24} justify="center">
           <Grid item xs={12} sm={6}>
-            <SignupForm />
+            <h1>Home Page</h1>
           </Grid>
         </Grid>
       </div>
@@ -39,4 +38,4 @@ class SignupPage extends Component {
   }
 }
 
-export default withStyles(styles)(withRouter(SignupPage));
+export default withStyles(styles)(withRouter(HomePage));
