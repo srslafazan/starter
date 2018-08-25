@@ -12,13 +12,13 @@ const connectToPostgres = async (
 ) => {
   if (attempts === 0) throw new Error('Failed to connect');
 
-  console.log('Connecting to postgres...');
+  logger.info('Connecting to postgres...');
 
   const client = new postgres.Client({ connectionString });
 
   try {
     const pgInterface = await client.connect();
-    console.log('Connected to postgres.');
+    logger.info('Connected to postgres.');
     return pgInterface;
   } catch (e) {
     console.error('Error connecting to postgres: ', e);

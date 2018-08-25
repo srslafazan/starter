@@ -5,8 +5,8 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "LOG_LEVEL=DEBUG nodemon ./index.js",
-    "start": "LOG_LEVEL=INFO node ./index.js",
+    "dev": "LOGGER_LEVEL=debug nodemon ./index.js",
+    "start": "LOGGER_LEVEL=info node ./index.js",
     "migrate": "node ./bin/migrate.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

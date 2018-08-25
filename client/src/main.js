@@ -20,16 +20,15 @@ import { render } from 'react-dom'
 import '@/style.sass'
 
 
+import loglevel from '@/constructors/loglevel'
+
 import Signup from '@/pages/Signup'
 import Login from '@/pages/Login'
 import Home from '@/pages/Home'
 
 log.info(`Bootstrapping Client (Web) app...`)
 
-const LOG_LEVEL = process.env.NODE_ENV === 'development' ? log.levels.DEBUG : log.levels.INFO
-log.setLevel(LOG_LEVEL, true)
-
-log.info(`Setting log level to "${LOG_LEVEL}"`)
+loglevel()
 
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
