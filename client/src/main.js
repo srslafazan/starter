@@ -11,7 +11,8 @@ import {
 } from 'react-router-dom'
 
 import { render } from 'react-dom'
-import { Button } from 'material-ui'
+
+import '@/style.css'
 
 import Signup from '@/pages/Signup'
 import Login from '@/pages/Login'

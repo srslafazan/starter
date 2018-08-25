@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Link, withRouter } from 'react-router-dom'
 
+import './Home.sass'
 
 class HomePage extends Component {
   render() {
@@ -11,8 +12,8 @@ class HomePage extends Component {
     document.title = 'Example - Signup'
     
     return (
-      <div>
-        <h1>Home Page</h1>
+      <div className="HomePage">
+        <h1 className="title">Home Page</h1>
       </div>
     )
   }
