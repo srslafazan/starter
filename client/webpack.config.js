@@ -14,9 +14,9 @@ const config = {
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].[hash].js',
     publicPath: '/',
-    chunkFilename: "[id].[hash].js"
+    chunkFilename: "[name].[id].[hash].js"
   },
   module: {
     rules: [

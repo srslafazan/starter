@@ -1,4 +1,7 @@
-const PG_URL = process.env.PG_URL || 'postgresql://postgres:password@postgres:5432/postgres';
+const postgres = require('pg');
+const logger = require('./logger');
+
+const PG_URL = process.env.PG_URL || 'postgresql://postgres:password@127.0.0.1:5432/postgres';
 
 const sleep = timeout => new Promise(resolve => setTimeout(resolve, timeout));
 
@@ -9,12 +12,16 @@ const connectToPostgres = async (
 ) => {
   if (attempts === 0) throw new Error('Failed to connect');
 
-  const client = new Client({ connectionString });
+  console.log('Connecting to postgres...');
+
+  const client = new postgres.Client({ connectionString });
 
   try {
-    await client.connect();
-    return client;
+    const pgInterface = await client.connect();
+    console.log('Connected to postgres.');
+    return pgInterface;
   } catch (e) {
+    console.error('Error connecting to postgres: ', e);
     await sleep(interval);
     return connectToPostgres(connectionString, attempts - 1, interval);
   }

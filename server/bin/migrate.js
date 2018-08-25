@@ -3,9 +3,9 @@ const Sequelize = require('sequelize');
 
 const host = '127.0.0.1';
 const port = 5432;
-const database = 'postgres';
+const database = defaultDatabase = 'postgres';
 const user = 'postgres';
-const password = '';
+const password = process.env.POSTGRES_PASSWORD || 'password';
 
 const run = async () => {
   try {
@@ -27,7 +27,7 @@ const run = async () => {
     await sequelize.sync({ logging: true });
 
     await createDb(database, {
-      defaultDatabase: 'postgres', // optional, default: 'postgres'
+      defaultDatabase, // optional, default: 'postgres'
       user,
       password,
       host,

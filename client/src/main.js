@@ -1,3 +1,8 @@
+/*
+ * Client (Web) - Entrypoint, Bootstrap
+**/
+
+
 import 'normalize.css'
 
 import React from 'react'
@@ -12,16 +17,20 @@ import {
 
 import { render } from 'react-dom'
 
-import '@/style.css'
+import '@/style.sass'
+
 
 import Signup from '@/pages/Signup'
 import Login from '@/pages/Login'
 import Home from '@/pages/Home'
 
+log.info(`Bootstrapping Client (Web) app...`)
 
-const logLevel = process.env.NODE_ENV === 'development' ? log.levels.DEBUG : log.levels.INFO
+const LOG_LEVEL = process.env.NODE_ENV === 'development' ? log.levels.DEBUG : log.levels.INFO
+log.setLevel(LOG_LEVEL, true)
 
-log.setLevel(logLevel, true)
+log.info(`Setting log level to "${LOG_LEVEL}"`)
+
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => {
@@ -30,7 +39,6 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     }}
   />
 );
-
 
 
 function App() {
@@ -45,4 +53,4 @@ function App() {
   )
 }
 
-render(<App />, document.querySelector('#app'))
+render(<App />, document.getElementById('app'))
