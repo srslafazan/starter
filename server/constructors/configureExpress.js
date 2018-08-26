@@ -27,7 +27,11 @@ const configureExpress = (app) => {
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(cookieParser())
   app.use(cors());
-  app.use(expressSession({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+  app.use(expressSession({
+    secret: process.env.EXPRESS_SESSION_SECRET || 'keyboard cat',
+    resave: true,
+    saveUninitialized: true,
+  }));
 
   return app
 }
