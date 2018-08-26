@@ -1,3 +1,4 @@
+const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const cors = require('cors');
@@ -6,23 +7,37 @@ const bodyParser = require('body-parser')
 const morgan = require('morgan');
 const Sequelize = require('sequelize')
 const session = require('express-session')
+const rfs = require('rotating-file-stream')
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sequelize = require('./sequelizePostgres');
 
 const EXPRESS_SESSION_SECRET = process.env.EXPRESS_SESSION_SECRET || 'keyboard cat'
+const logsDirectory = path.join(__dirname, '../logs')
 
 
 const configureExpress = (app) => {
+  // ensure log directory exists
+  fs.existsSync(logsDirectory) || fs.mkdirSync(logsDirectory);
+   
+  const logStreamConfig = {
+    interval: '1d', // rotate daily
+    compress: 'gzip', // compress rotated files
+    path: logsDirectory,
+  };
+
+  const accessLogStream = rfs('access.log', logStreamConfig);
+  const errorLogStream = rfs('error.log', logStreamConfig);
+
   app.use(morgan('dev', {
     skip: (req, res) => res.statusCode < 400,
-    stream: process.stderr,
+    stream: process.env === 'production' ? errorLogStream : process.stderr,
   }));
 
   app.use(morgan('dev', {
       skip: (req, res) => res.statusCode >= 400,
-      stream: process.stdout,
+      stream: process.env === 'production' ? accessLogStream : process.stdout,
   }));
 
   app.set('view engine', 'ejs')
