@@ -1,38 +1,25 @@
 const { createDb, migrate } = require('postgres-migrations');
-const Sequelize = require('sequelize');
+const sequelizePostgres = require('../constructors/sequelizePostgres');
 
-const host = '127.0.0.1';
-const port = 5432;
-const database = defaultDatabase = 'postgres';
-const user = 'postgres';
-const password = process.env.POSTGRES_PASSWORD || 'password';
+const {
+  database,
+  host,
+  user,
+  password,
+  port,
+} = require('../constants/postgres')
 
 const run = async () => {
   try {
-    const sequelize = new Sequelize(database, user, password, {
-      host,
-      dialect: 'postgres',
-
-      pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000
-      },
-
-      // http://docs.sequelizejs.com/manual/tutorial/querying.html#operators
-      operatorsAliases: false
-    });
-
-    await sequelize.sync({ logging: true });
+    await sequelizePostgres.sync({ logging: true });
 
     await createDb(database, {
-      defaultDatabase, // optional, default: 'postgres'
+      defaultDatabase: database, // optional, default: 'postgres'
       user,
       password,
       host,
       port,
-    })
+    });
 
     await migrate({
       database,

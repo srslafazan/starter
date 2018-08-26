@@ -1,12 +1,14 @@
 const postgres = require('pg');
 const logger = require('./logger');
 
-const PG_URL = process.env.PG_URL || 'postgresql://postgres:password@127.0.0.1:5432/postgres';
+const {
+  url,
+} = require('../constants/postgres')
 
 const sleep = timeout => new Promise(resolve => setTimeout(resolve, timeout));
 
 const connectToPostgres = async (
-  connectionString = PG_URL,
+  connectionString = url,
   attempts = 30,
   interval = 1000,
 ) => {

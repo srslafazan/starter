@@ -13,6 +13,7 @@ routes.get('/version', function(req, res, next) {
 routes.get('*', function (req, res) {
   logger.debug('Debug statement');
   logger.info('Info statement');
+  console.log(req);
   res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
 });
 
