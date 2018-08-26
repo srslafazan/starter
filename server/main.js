@@ -12,24 +12,14 @@ const logger = require('./constructors/logger');
 
 const packageJson = require('./package.json');
 
+const routes = require('./routes')
+
 const app = configureExpress(express());
 
 const PORT = 8000;
 
 
-app.get('/health', function(req, res, next) {
-  res.send({ healthy: true })
-})
-
-app.get('/version', function(req, res, next) {
-  res.send({ version: packageJson.version })
-})
-
-app.get('*', function (req, res) {
-  logger.debug('Debug statement');
-  logger.info('Info statement');
-  res.sendFile(path.resolve(__dirname, '../client/dist/index.html'));
-});
+app.use('/', routes);
 
 
 const run = async () => {

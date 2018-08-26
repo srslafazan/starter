@@ -1,6 +1,6 @@
 {
   "name": "client",
-  "version": "1.0.1",
+  "version": "0.1.0",
   "description": "Client app",
   "repository": "",
   "main": "index.js",

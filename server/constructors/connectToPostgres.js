@@ -21,7 +21,7 @@ const connectToPostgres = async (
     logger.info('Connected to postgres.');
     return pgInterface;
   } catch (e) {
-    console.error('Error connecting to postgres: ', e);
+    logger.error('Error connecting to postgres: ', e);
     await sleep(interval);
     return connectToPostgres(connectionString, attempts - 1, interval);
   }
