@@ -1,5 +1,7 @@
+require('module-alias/register');
+
 const { createDb, migrate } = require('postgres-migrations');
-const sequelizePostgres = require('../constructors/sequelizePostgres');
+const { sequelize } = require('../constructors/sequelize');
 
 const {
   database,
@@ -11,7 +13,7 @@ const {
 
 const run = async () => {
   try {
-    await sequelizePostgres.sync({ logging: true });
+    await sequelize.sync({ logging: true });
 
     await createDb(database, {
       defaultDatabase: database, // optional, default: 'postgres'

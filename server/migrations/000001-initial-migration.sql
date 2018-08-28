@@ -2,120 +2,120 @@
 -- ************************************************;
 
 
--- ************************************** privileges
+-- ************************************** "privileges"
 
-CREATE TABLE privileges
+CREATE TABLE "privileges"
 (
- id         serial PRIMARY KEY ,
- name       varchar(255) NOT NULL ,
- created_at timestamp NOT NULL ,
- updated_at timestamp NOT NULL
+ "id"         serial PRIMARY KEY ,
+ "name"       varchar(255) NOT NULL ,
+ "createdAt"  timestamp with time zone NOT NULL DEFAULT NOW() ,
+ "updatedAt"  timestamp with time zone NOT NULL DEFAULT NOW()
 );
 
 
 
 
 
--- ************************************** admins
+-- ************************************** "admins"
 
-CREATE TABLE admins
+CREATE TABLE "admins"
 (
- id            serial PRIMARY KEY ,
- name          varchar(255) NOT NULL ,
- email         varchar(255) NOT NULL ,
- phone         varchar(50) NOT NULL ,
- created_at    timestamp NOT NULL ,
- updated_at    timestamp NOT NULL ,
- password_hash varchar(255) NOT NULL
+ "id"             serial PRIMARY KEY ,
+ "name"           varchar(255) NOT NULL ,
+ "email"          varchar(255) NOT NULL ,
+ "phone"          varchar(50) NOT NULL ,
+ "passwordHash"   varchar(255) NOT NULL ,
+ "createdAt"      timestamp with time zone NOT NULL DEFAULT NOW() ,
+ "updatedAt"      timestamp with time zone NOT NULL DEFAULT NOW()
 );
 
 
 
 
 
--- ************************************** product_categories
+-- ************************************** "productCategories"
 
-CREATE TABLE product_categories
+CREATE TABLE "productCategories"
 (
- id         serial PRIMARY KEY ,
- name       varchar(100) NOT NULL ,
- created_at timestamp NOT NULL ,
- updated_at timestamp NOT NULL
+ "id"         serial PRIMARY KEY ,
+ "name"       varchar(100) NOT NULL ,
+ "createdAt"  timestamp with time zone NOT NULL DEFAULT NOW() ,
+ "updatedAt"  timestamp with time zone NOT NULL DEFAULT NOW()
 );
 
 
 
 
 
--- ************************************** users
+-- ************************************** "users"
 
-CREATE TABLE users
+CREATE TABLE "users"
 (
- id            serial PRIMARY KEY ,
- name          varchar(255) NOT NULL ,
- email         varchar(255) NOT NULL ,
- phone         varchar(50) NOT NULL ,
- created_at    timestamp NOT NULL ,
- updated_at    timestamp NOT NULL ,
- password_hash varchar(255) NOT NULL
+ "id"             serial PRIMARY KEY ,
+ "name"           varchar(255) NOT NULL ,
+ "email"          varchar(255) NOT NULL ,
+ "phone"          varchar(50) NOT NULL ,
+ "passwordHash"   varchar(255) NOT NULL ,
+ "createdAt"      timestamp with time zone NOT NULL DEFAULT NOW() ,
+ "updatedAt"      timestamp with time zone NOT NULL DEFAULT NOW()
 );
 
 
 
 
 
--- ************************************** admin_privileges
+-- ************************************** "adminPrivileges"
 
-CREATE TABLE admin_privileges
+CREATE TABLE "adminPrivileges"
 (
- id           serial PRIMARY KEY ,
- admin_id     bigserial NOT NULL REFERENCES admins (id) ,
- privilege_id bigserial NOT NULL REFERENCES privileges (id) ,
- CONSTRAINT admin_privileges_admin FOREIGN KEY (admin_id) REFERENCES admins (id) ,
- CONSTRAINT admin_privileges_privilege FOREIGN KEY (privilege_id) REFERENCES privileges (id)
+ "id"           serial PRIMARY KEY ,
+ "adminId"      bigserial NOT NULL REFERENCES "admins" ("id") ,
+ "privilegeId"  bigserial NOT NULL REFERENCES "privileges" ("id") ,
+ CONSTRAINT "adminPrivilegesAdmin" FOREIGN KEY ("adminId") REFERENCES "admins" ("id") ,
+ CONSTRAINT "adminPrivilegesPrivilege" FOREIGN KEY ("privilegeId") REFERENCES "privileges" ("id")
 );
 
 
 
 
 
--- ************************************** orders
+-- ************************************** "orders"
 
-CREATE TABLE orders
+CREATE TABLE "orders"
 (
- id         bigserial PRIMARY KEY ,
- user_id    bigserial NOT NULL REFERENCES users (id) ,
- created_at timestamp NOT NULL ,
- updated_at timestamp NOT NULL ,
- CONSTRAINT orders_user FOREIGN KEY (user_id) REFERENCES users (id)
+ "id"         bigserial PRIMARY KEY ,
+ "userId"     bigserial NOT NULL REFERENCES "users" ("id") ,
+ "createdAt"  timestamp with time zone NOT NULL DEFAULT NOW() ,
+ "updatedAt"  timestamp with time zone NOT NULL DEFAULT NOW() ,
+ CONSTRAINT "ordersUser" FOREIGN KEY ("userId") REFERENCES "users" ("id")
 );
 
 
 
 
 
--- ************************************** products
+-- ************************************** "products"
 
-CREATE TABLE products
+CREATE TABLE "products"
 (
- id          bigserial PRIMARY KEY ,
- category_id bigserial NOT NULL REFERENCES product_categories (id) ,
- name        varchar(255) NOT NULL ,
- description text NOT NULL ,
- image_url   text NOT NULL ,
- created_at  timestamp NOT NULL ,
- updated_at  timestamp NOT NULL ,
- CONSTRAINT products_category FOREIGN KEY (category_id) REFERENCES product_categories (id)
+ "id"           bigserial PRIMARY KEY ,
+ "categoryId"   bigserial NOT NULL REFERENCES "productCategories" ("id") ,
+ "name"         varchar(255) NOT NULL ,
+ "description"  text NOT NULL ,
+ "imageUrl"     text NOT NULL ,
+ "createdAt"    timestamp with time zone NOT NULL DEFAULT NOW() ,
+ "updatedAt"    timestamp with time zone NOT NULL DEFAULT NOW() ,
+ CONSTRAINT "productsCategory" FOREIGN KEY ("categoryId") REFERENCES "productCategories" ("id")
 );
 
 
--- ************************************** product_orders
+-- ************************************** "productOrders"
 
-CREATE TABLE product_orders
+CREATE TABLE "productOrders"
 (
- id         bigserial PRIMARY KEY ,
- order_id   bigserial NOT NULL REFERENCES orders (id) ,
- product_id bigserial NOT NULL REFERENCES products (id) ,
- CONSTRAINT product_orders_order FOREIGN KEY (order_id) REFERENCES orders (id) ,
- CONSTRAINT product_orders_product FOREIGN KEY (product_id) REFERENCES products (id)
+ "id"         bigserial PRIMARY KEY ,
+ "orderId"   bigserial NOT NULL REFERENCES "orders" ("id") ,
+ "productId" bigserial NOT NULL REFERENCES "products" ("id") ,
+ CONSTRAINT "productOrdersOrder" FOREIGN KEY ("orderId") REFERENCES "orders" ("id") ,
+ CONSTRAINT "productOrdersProduct" FOREIGN KEY ("productId") REFERENCES "products" ("id")
 );

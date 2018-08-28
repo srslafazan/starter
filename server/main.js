@@ -3,18 +3,16 @@
 **/
 
 const http = require('http')
-const path = require('path')
-const express = require('express')
 
-const connectToPostgres = require('./constructors/connectToPostgres');
-const configureExpress = require('./constructors/configureExpress');
-const logger = require('./constructors/logger');
+const postgres = require('@/constructors/postgres');
+const Express = require('@/constructors/express');
+const logger = require('@/constructors/logger');
 
-const packageJson = require('./package.json');
+const packageJson = require('@/package.json');
 
-const routes = require('./routes')
+const routes = require('@/routes')
 
-const app = configureExpress(express());
+const app = Express();
 
 const PORT = 8000;
 
@@ -27,7 +25,7 @@ const run = async () => {
     console.log(`API version ${packageJson.version}, listening on port ${PORT}`)
 
     try {
-      await connectToPostgres()
+      await postgres()
     } catch(e) {
       console.warn('Error connecting to postgres,', e);
     }

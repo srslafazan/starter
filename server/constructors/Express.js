@@ -11,13 +11,15 @@ const rfs = require('rotating-file-stream')
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const sequelize = require('./sequelizePostgres');
+const { sequelize } = require('./sequelize');
 
 const EXPRESS_SESSION_SECRET = process.env.EXPRESS_SESSION_SECRET || 'keyboard cat'
 const logsDirectory = path.join(__dirname, '../logs')
 
 
-const configureExpress = (app) => {
+const Express = () => {
+  const app = express();
+
   // ensure log directory exists
   fs.existsSync(logsDirectory) || fs.mkdirSync(logsDirectory);
    
@@ -74,4 +76,4 @@ const configureExpress = (app) => {
   return app
 }
 
-module.exports = configureExpress;
+module.exports = Express;

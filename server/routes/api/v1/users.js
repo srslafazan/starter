@@ -1,16 +1,43 @@
 const router = require('express').Router();
+const logger = require('@/constructors/logger');
 
-module.exports = ({ sequelize }) => {
-  // const { User } = sequelize.models;
-  // console.log(sequelize.models);
-  router.get('/', (req, res) => {
-    console.log('return all users');
+
+module.exports = ({ sequelize, models }) => {
+  const { users } = models;
+
+  router.get('/', async (req, res) => {
+    logger.info('All Users');
+    try {
+      return res.status(200).json(await users.findAll({ raw: true }));
+    } catch(e) {
+      console.error(e)
+      return res.status(500).json({ error: 'An error occurred while fetching users.' });
+    }
   });
 
-  router.get('/:phone', (req, res) => {
-    console.log('/:phone');
-    // await User.findOne({ phone });
-    return res.status(200).json({ phone: '123-456-7890' });
+  router.get('/:id', async (req, res) => {
+    console.log('/:id');
+    try {
+      const user = await User.findOne({ id })
+    } catch (e) {
+      console.error(e);
+      return res.status(500).json({ error: 'An error occurred while fetching users.' });
+    }
+    return res.status(200).json(user);
+  });
+
+  router.post('/', async (req, res) => {
+    if (!req.body.phone) res.status(500).json({
+      error: 'User.phone must be provided.',
+    });
+
+    try {
+      const [user, created] = await users.findOrCreate({ where: { phone: req.body.phone } })
+      res.status(200).send(user.get({ plain: true }));
+    } catch (e) {
+      console.error(e)
+      return res.status(500).json({ error: 'An error occurred while fetching users.' });
+    }
   });
 
   return router; 

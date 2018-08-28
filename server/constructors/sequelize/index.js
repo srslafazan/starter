@@ -1,20 +1,23 @@
 const Sequelize = require('sequelize');
+const Models = require('./models');
+const SequelizeAuto = require('sequelize-auto')
 
 const {
   database,
+  dialect,
   host,
   user,
   password,
-} = require('../constants/postgres')
+  port,
+} = require('@/constants/postgres')
 
-
-const sequelizePostgres = new Sequelize(
+const sequelize = new Sequelize(
   database,
   user,
   password,
   {
     host,
-    dialect: 'postgres',
+    dialect,
 
     pool: {
       max: 5,
@@ -27,4 +30,8 @@ const sequelizePostgres = new Sequelize(
   }
 );
 
-module.exports = sequelizePostgres;
+module.exports = {
+  sequelize,
+  Sequelize,
+  models: Models({ sequelize }),
+};
