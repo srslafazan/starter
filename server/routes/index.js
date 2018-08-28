@@ -1,10 +1,24 @@
-const routes = require('express').Router();
+const path = require('path');
+const router = require('express').Router();
+const sequelize = require('../constructors/sequelizePostgres');
+const logger = require('../constructors/logger');
+const APIRouter = require('./api');
 
-const root = require('./root');
-const models = require('./models');
+router.use('/api', APIRouter);
 
-routes.use('/models', models);
-routes.use('/', root);
+router.get('/health', function(req, res, next) {
+  res.send({ healthy: true })
+})
 
+router.get('/version', function(req, res, next) {
+  res.send({ version: packageJson.version })
+})
 
-module.exports = routes;
+router.get('*', function (req, res) {
+  logger.debug('Debug statement');
+  logger.info('Info statement');
+  console.log(req);
+  res.sendFile(path.resolve(__dirname, '../../client/dist/index.html'));
+});
+
+module.exports = router;
