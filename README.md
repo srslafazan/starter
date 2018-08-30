@@ -5,6 +5,9 @@
 - node
 - yarn
 
+The client, server, and database are run separately.
+
+
 # Client (Web)
 ## Install
 ```bash
@@ -27,6 +30,11 @@ cd client && yarn start
 ## Install
 ```bash
 cd server && yarn
+```
+## Setup
+- Runs postgres and sequelize migrations.
+```bash
+cd server && yarn setup
 ```
 ## Run (dev)
 ```bash
