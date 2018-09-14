@@ -3,12 +3,12 @@ const logger = require('@/constructors/logger');
 
 
 module.exports = ({ sequelize, models }) => {
-  const { users } = models;
+  const { Users } = models;
 
   router.get('/', async (req, res) => {
     logger.info('All Users');
     try {
-      return res.status(200).json(await users.findAll({ raw: true }));
+      return res.status(200).json(await Users.findAll({ raw: true }));
     } catch(e) {
       console.error(e)
       return res.status(500).json({ error: 'An error occurred while fetching users.' });
@@ -18,7 +18,7 @@ module.exports = ({ sequelize, models }) => {
   router.get('/:id', async (req, res) => {
     console.log('/:id');
     try {
-      const user = await User.findOne({ id })
+      const user = await Users.findOne({ id })
     } catch (e) {
       console.error(e);
       return res.status(500).json({ error: 'An error occurred while fetching users.' });
@@ -32,7 +32,7 @@ module.exports = ({ sequelize, models }) => {
     });
 
     try {
-      const [user, created] = await users.findOrCreate({ where: { phone: req.body.phone } })
+      const [user, created] = await Users.findOrCreate({ where: { phone: req.body.phone } })
       res.status(200).send(user.get({ plain: true }));
     } catch (e) {
       console.error(e)
