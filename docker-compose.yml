@@ -27,6 +27,7 @@ services:
       - POSTGRES_HOST=postgres
       - POSTGRES_URL=postgresql://postgres:password@postgres:5432/postgres
       - POSTGRES_PASSWORD=password
+      - POSTGRES_DATABASE=postgres
       - OPENRECORD_POSTGRES_HOST=postgres
       - OPENRECORD_POSTGRES_USER=postgres
       - OPENRECORD_POSTGRES_PASSWORD=password
