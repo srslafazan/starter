@@ -10,4 +10,6 @@ WORKDIR /app
 
 RUN yarn install
 
+RUN yarn add --global nodemon
+
 CMD yarn migrate && yarn start
