@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-import axios from 'axios'
+import PropTypes from 'prop-types'
+import axios from '@/constructors/axios'
 import * as log from 'loglevel'
 
 import { Link, withRouter } from 'react-router-dom'
