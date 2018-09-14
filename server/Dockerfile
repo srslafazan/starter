@@ -1,11 +1,13 @@
 FROM node
 
-RUN apk update
-RUN apk add postgresql-dev
-RUN apk add python
-RUN apk add build-base
-RUN apk add git
+RUN apt-get update
+
+RUN mkdir /app
+
+ADD . ./app
+
+WORKDIR /app
 
 RUN yarn install
 
-CMD yarn start
+CMD yarn migrate && yarn start

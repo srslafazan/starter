@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('productCategories', {
+	return sequelize.define('ProductCategories', {
 		id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
@@ -23,6 +23,6 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: sequelize.fn('now')
 		}
 	}, {
-		tableName: 'productCategories'
+		tableName: 'ProductCategories'
 	});
 };

@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('orders', {
+	return sequelize.define('Orders', {
 		id: {
 			type: DataTypes.BIGINT,
 			allowNull: false,
@@ -11,9 +11,9 @@ module.exports = function(sequelize, DataTypes) {
 		userId: {
 			type: DataTypes.BIGINT,
 			allowNull: false,
-			defaultValue: 'nextval("orders_userId_seq"::regclass)',
+			defaultValue: 'nextval("Orders_userId_seq"::regclass)',
 			references: {
-				model: 'users',
+				model: 'Users',
 				key: 'id'
 			}
 		},
@@ -28,6 +28,6 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: sequelize.fn('now')
 		}
 	}, {
-		tableName: 'orders'
+		tableName: 'Orders'
 	});
 };

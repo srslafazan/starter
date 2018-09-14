@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('products', {
+	return sequelize.define('Products', {
 		id: {
 			type: DataTypes.BIGINT,
 			allowNull: false,
@@ -11,9 +11,9 @@ module.exports = function(sequelize, DataTypes) {
 		categoryId: {
 			type: DataTypes.BIGINT,
 			allowNull: false,
-			defaultValue: 'nextval("products_categoryId_seq"::regclass)',
+			defaultValue: 'nextval("Products_categoryId_seq"::regclass)',
 			references: {
-				model: 'productCategories',
+				model: 'ProductCategories',
 				key: 'id'
 			}
 		},
@@ -40,6 +40,6 @@ module.exports = function(sequelize, DataTypes) {
 			defaultValue: sequelize.fn('now')
 		}
 	}, {
-		tableName: 'products'
+		tableName: 'Products'
 	});
 };

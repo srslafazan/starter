@@ -1,7 +1,7 @@
 /* jshint indent: 1 */
 
 module.exports = function(sequelize, DataTypes) {
-	return sequelize.define('adminPrivileges', {
+	return sequelize.define('AdminPrivileges', {
 		id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
@@ -11,22 +11,22 @@ module.exports = function(sequelize, DataTypes) {
 		adminId: {
 			type: DataTypes.BIGINT,
 			allowNull: false,
-			defaultValue: 'nextval("adminPrivileges_adminId_seq"::regclass)',
+			defaultValue: 'nextval("AdminPrivileges_adminId_seq"::regclass)',
 			references: {
-				model: 'admins',
+				model: 'Admins',
 				key: 'id'
 			}
 		},
 		privilegeId: {
 			type: DataTypes.BIGINT,
 			allowNull: false,
-			defaultValue: 'nextval("adminPrivileges_privilegeId_seq"::regclass)',
+			defaultValue: 'nextval("AdminPrivileges_privilegeId_seq"::regclass)',
 			references: {
-				model: 'privileges',
+				model: 'Privileges',
 				key: 'id'
 			}
 		}
 	}, {
-		tableName: 'adminPrivileges'
+		tableName: 'AdminPrivileges'
 	});
 };

@@ -2,9 +2,9 @@
 -- ************************************************;
 
 
--- ************************************** "Privileges"
+-- ************************************** "privileges"
 
-CREATE TABLE "Privileges"
+CREATE TABLE "privileges"
 (
  "id"         serial PRIMARY KEY ,
  "name"       varchar(255) NOT NULL ,
@@ -16,9 +16,9 @@ CREATE TABLE "Privileges"
 
 
 
--- ************************************** "Admins"
+-- ************************************** "admins"
 
-CREATE TABLE "Admins"
+CREATE TABLE "admins"
 (
  "id"             serial PRIMARY KEY ,
  "name"           varchar(255) NOT NULL ,
@@ -33,9 +33,9 @@ CREATE TABLE "Admins"
 
 
 
--- ************************************** "ProductCategories"
+-- ************************************** "productCategories"
 
-CREATE TABLE "ProductCategories"
+CREATE TABLE "productCategories"
 (
  "id"         serial PRIMARY KEY ,
  "name"       varchar(100) NOT NULL ,
@@ -47,9 +47,9 @@ CREATE TABLE "ProductCategories"
 
 
 
--- ************************************** "Users"
+-- ************************************** "users"
 
-CREATE TABLE "Users"
+CREATE TABLE "users"
 (
  "id"             serial PRIMARY KEY ,
  "name"           varchar(255) NOT NULL ,
@@ -64,58 +64,58 @@ CREATE TABLE "Users"
 
 
 
--- ************************************** "AdminPrivileges"
+-- ************************************** "adminPrivileges"
 
-CREATE TABLE "AdminPrivileges"
+CREATE TABLE "adminPrivileges"
 (
  "id"           serial PRIMARY KEY ,
- "adminId"      bigserial NOT NULL REFERENCES "Admins" ("id") ,
- "privilegeId"  bigserial NOT NULL REFERENCES "Privileges" ("id") ,
- CONSTRAINT "adminPrivilegesAdmin" FOREIGN KEY ("adminId") REFERENCES "Admins" ("id") ,
- CONSTRAINT "adminPrivilegesPrivilege" FOREIGN KEY ("privilegeId") REFERENCES "Privileges" ("id")
+ "adminId"      bigserial NOT NULL REFERENCES "admins" ("id") ,
+ "privilegeId"  bigserial NOT NULL REFERENCES "privileges" ("id") ,
+ CONSTRAINT "adminPrivilegesAdmin" FOREIGN KEY ("adminId") REFERENCES "admins" ("id") ,
+ CONSTRAINT "adminPrivilegesPrivilege" FOREIGN KEY ("privilegeId") REFERENCES "privileges" ("id")
 );
 
 
 
 
 
--- ************************************** "Orders"
+-- ************************************** "orders"
 
-CREATE TABLE "Orders"
+CREATE TABLE "orders"
 (
  "id"         bigserial PRIMARY KEY ,
- "userId"     bigserial NOT NULL REFERENCES "Users" ("id") ,
+ "userId"     bigserial NOT NULL REFERENCES "users" ("id") ,
  "createdAt"  timestamp with time zone NOT NULL DEFAULT NOW() ,
  "updatedAt"  timestamp with time zone NOT NULL DEFAULT NOW() ,
- CONSTRAINT "ordersUser" FOREIGN KEY ("userId") REFERENCES "Users" ("id")
+ CONSTRAINT "ordersUser" FOREIGN KEY ("userId") REFERENCES "users" ("id")
 );
 
 
 
 
 
--- ************************************** "Products"
+-- ************************************** "products"
 
-CREATE TABLE "Products"
+CREATE TABLE "products"
 (
  "id"           bigserial PRIMARY KEY ,
- "categoryId"   bigserial NOT NULL REFERENCES "ProductCategories" ("id") ,
+ "categoryId"   bigserial NOT NULL REFERENCES "productCategories" ("id") ,
  "name"         varchar(255) NOT NULL ,
  "description"  text NOT NULL ,
  "imageUrl"     text NOT NULL ,
  "createdAt"    timestamp with time zone NOT NULL DEFAULT NOW() ,
  "updatedAt"    timestamp with time zone NOT NULL DEFAULT NOW() ,
- CONSTRAINT "productsCategory" FOREIGN KEY ("categoryId") REFERENCES "ProductCategories" ("id")
+ CONSTRAINT "productsCategory" FOREIGN KEY ("categoryId") REFERENCES "productCategories" ("id")
 );
 
 
--- ************************************** "ProductOrders"
+-- ************************************** "productOrders"
 
-CREATE TABLE "ProductOrders"
+CREATE TABLE "productOrders"
 (
  "id"         bigserial PRIMARY KEY ,
- "orderId"   bigserial NOT NULL REFERENCES "Orders" ("id") ,
- "productId" bigserial NOT NULL REFERENCES "Products" ("id") ,
- CONSTRAINT "productOrdersOrder" FOREIGN KEY ("orderId") REFERENCES "Orders" ("id") ,
- CONSTRAINT "productOrdersProduct" FOREIGN KEY ("productId") REFERENCES "Products" ("id")
+ "orderId"   bigserial NOT NULL REFERENCES "orders" ("id") ,
+ "productId" bigserial NOT NULL REFERENCES "products" ("id") ,
+ CONSTRAINT "productOrdersOrder" FOREIGN KEY ("orderId") REFERENCES "orders" ("id") ,
+ CONSTRAINT "productOrdersProduct" FOREIGN KEY ("productId") REFERENCES "products" ("id")
 );
