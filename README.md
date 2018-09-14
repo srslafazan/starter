@@ -7,6 +7,10 @@
 
 The client, server, and database are run separately.
 
+# TL;DR
+```bash
+docker-compose up --build
+```
 
 # Client (Web)
 ## Install
