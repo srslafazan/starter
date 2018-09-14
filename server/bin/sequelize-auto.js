@@ -1,4 +1,5 @@
 require('module-alias/register');
+const path = require('path');
 const SequelizeAuto = require('sequelize-auto');
 
 const {
@@ -14,6 +15,7 @@ const auto = new SequelizeAuto(database, user, password, {
   host,
   dialect,
   port,
+  directory: path.resolve(__dirname, '../constructors/sequelize/models'),
 });
 
 auto.run(function (err) {
