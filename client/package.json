@@ -30,6 +30,7 @@
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
     "file-loader": "^1.1.11",
+    "history": "^4.7.2",
     "json-loader": "^0.5.7",
     "loglevel": "^1.6.1",
     "node-sass": "^4.9.3",
