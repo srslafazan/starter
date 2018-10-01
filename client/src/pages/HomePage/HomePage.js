@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Link, withRouter } from 'react-router-dom'
 
-import './Home.sass'
+import './HomePage.sass'
 
 class HomePage extends Component {
   render() {

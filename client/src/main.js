@@ -9,22 +9,26 @@ import React from 'react'
 import * as log from 'loglevel'
 
 import {
-  BrowserRouter,
+  Router,
   Link,
   Redirect,
   Route,
 } from 'react-router-dom'
 
 import { render } from 'react-dom'
+import { Provider } from 'react-redux'
 
 import '@/style.sass'
 
-
+import createReduxStore from '@/constructors/redux/store'
 import loglevel from '@/constructors/loglevel'
+import history from '@/constructors/history'
 
-import Signup from '@/pages/Signup'
-import Login from '@/pages/Login'
-import Home from '@/pages/Home'
+import SignupPage from '@/pages/SignupPage'
+import LoginPage from '@/pages/LoginPage'
+import HomePage from '@/pages/HomePage'
+
+import Layout from '@/components/Layout'
 
 log.info(`Bootstrapping Client (Web) app...`)
 
@@ -41,14 +45,20 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 function App() {
+  const store = createReduxStore();
+  history.listen((location, action) => {
+    log.info('Routing to location: ', location);
+  });
   return (
-    <BrowserRouter>
-      <div>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={Signup} />
-        <PrivateRoute exact path="/" component={Home} />
-      </div>
-    </BrowserRouter>
+    <Provider store={store}>
+      <Router history={history}>
+        <Layout>
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/signup" component={SignupPage} />
+          <PrivateRoute exact path="/" component={HomePage} />
+        </Layout>
+      </Router>
+    </Provider>
   )
 }
 
