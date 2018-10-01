@@ -9,6 +9,7 @@
     "start": "LOGGER_LEVEL=info node ./index.js",
     "setup": "yarn migrate && yarn sequelize-auto",
     "migrate": "node ./bin/migrate.js",
+    "sequelize-migrate": "./node_modules/.bin/sequelize db:migrate",
     "sequelize-auto": "node ./bin/sequelize-auto",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

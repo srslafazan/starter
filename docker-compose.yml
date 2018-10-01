@@ -15,6 +15,8 @@ services:
     build: ./client
     ports:
       - "8080:8080"
+    volumes:
+      - ./client:/app
 
   server:
     build: ./server
