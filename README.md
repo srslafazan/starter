@@ -5,12 +5,19 @@
 - node + npm
 - yarn
 
+## Setup
+
+```bash
+cd client && yarn
+cd server && yarn
+```
+
 ## Start
-> - With docker
+> With docker
 ```bash
 docker-compose up --build
 ```
-> - With separate local servers
+> With separate local servers
 Database
 ```bash
 docker-compose up postgres
