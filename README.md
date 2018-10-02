@@ -1,15 +1,30 @@
 # Starter
 
-# Dependencies
+## Dependencies
 - docker
-- node
+- node + npm
 - yarn
 
-# Start
+## Start
+- With docker
 ```bash
 docker-compose up --build
 ```
+- With separate local servers
+Database
+```bash
+docker-compose up postgres
+```
+client
+```bash
+cd client && yarn dev
+```
+Server
+```bash
+cd server && yarn dev
+```
 
-# License
+
+## License
 
 MIT
