@@ -6,20 +6,20 @@
 - yarn
 
 ## Start
-- With docker
+> - With docker
 ```bash
 docker-compose up --build
 ```
-- With separate local servers
+> - With separate local servers
 Database
 ```bash
 docker-compose up postgres
 ```
-client
+- Client
 ```bash
 cd client && yarn dev
 ```
-Server
+- Server
 ```bash
 cd server && yarn dev
 ```
