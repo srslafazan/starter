@@ -34,6 +34,7 @@ services:
       - OPENRECORD_POSTGRES_USER=postgres
       - OPENRECORD_POSTGRES_PASSWORD=password
       - OPENRECORD_POSTGRES_DATABASE=postgres
+      - PUSH_SUBSCRIPTION_ENCRYPTION_KEY=push_subscription_key
     depends_on:
       - postgres
     volumes:

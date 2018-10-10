@@ -16,11 +16,11 @@ module.exports = {
           allowNull: false,
         },
         phone: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false
         },
         passwordHash: {
-          type: DataTypes.STRING,
+          type: Sequelize.STRING,
           allowNull: false
         },
         createdAt: {

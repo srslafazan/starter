@@ -73,6 +73,8 @@ const Express = () => {
 
   sessionStore.sync();
 
+  app.disable('x-powered-by');
+
   return app
 }
 

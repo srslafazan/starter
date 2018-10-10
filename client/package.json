@@ -30,6 +30,7 @@
     "axios": "^0.18.0",
     "cross-env": "^5.1.4",
     "css-loader": "^0.28.11",
+    "device-uuid": "^1.0.4",
     "file-loader": "^1.1.11",
     "history": "^4.7.2",
     "json-loader": "^0.5.7",
@@ -42,6 +43,7 @@
     "react-router-dom": "^4.2.2",
     "regenerator": "^0.13.2",
     "sass-loader": "^7.1.0",
+    "serviceworker-webpack-plugin": "^1.0.1",
     "style-loader": "^0.20.3",
     "webpack": "^4.16.1"
   },
