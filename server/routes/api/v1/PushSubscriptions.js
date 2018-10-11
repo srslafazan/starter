@@ -23,8 +23,8 @@ module.exports = ({ sequelize, models }) => {
       const { subscription } = req.body
       if (!subscription) return res.status(500).json({ error: 'Parameter subscription must be provided.' });
       const hash = sjcl.encrypt(process.env.PUSH_SUBSCRIPTION_ENCRYPTION_KEY, JSON.stringify(subscription))
-      const [subscriptionFromDB, created] = await PushSubscriptions.findOrCreate({ where: { hash } })
-      return res.status(200).send(subscriptionFromDB.get({ plain: true }));
+      const [hashObject, created] = await PushSubscriptions.findOrCreate({ where: { hash } })
+      return res.status(200).send({ message: 'Subscription found or created', success: true });
     } catch (e) {
       console.error(e)
       return res.status(500).json({ error: 'An error occurred while fetching PushSubscriptions.' });
