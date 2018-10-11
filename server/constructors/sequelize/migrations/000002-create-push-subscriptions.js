@@ -8,6 +8,10 @@ module.exports = {
         autoIncrement: true
       },
       hash: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      subscription: {
         type: Sequelize.JSONB,
         allowNull: false
       },

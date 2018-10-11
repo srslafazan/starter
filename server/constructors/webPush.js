@@ -11,4 +11,13 @@ webpush.setVapidDetails(
   vapidKeys.privateKey
 );
 
-module.exports = webpush
+module.exports.sendNotification = async (subscription, dataToSend) => {
+  const res = await webpush.sendNotification(subscription, dataToSend)
+  .catch((err) => {
+    if (err.statusCode >= 400) {
+      console.log('Subscription is invalid: ', err)
+    }
+  })
+}
+
+module.exports.default = webpush

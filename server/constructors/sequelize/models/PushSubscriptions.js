@@ -9,6 +9,10 @@ module.exports = function(sequelize, DataTypes) {
       autoIncrement: true
     },
     hash: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    subscription: {
       type: DataTypes.JSONB,
       allowNull: false
     },
