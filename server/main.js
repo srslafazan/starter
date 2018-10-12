@@ -17,6 +17,7 @@ const app = Express();
 
 const PORT = process.env.PORT || 8000;
 
+console.log(`Bootstrapping Server (Gateway) ... (${Date.now()})`)
 
 app.use('/', routes);
 

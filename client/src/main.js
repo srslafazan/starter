@@ -31,7 +31,7 @@ import HomePage from '@/pages/HomePage'
 
 import Layout from '@/components/Layout'
 
-log.info(`Bootstrapping Client (Web) app...`)
+log.info(`Bootstrapping Client (Web) ... (${Date.now()})`)
 
 loglevel()
 

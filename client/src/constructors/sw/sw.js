@@ -1,7 +1,7 @@
 /* eslint-env browser, serviceworker, es6 */
 import * as log from 'loglevel'
 
-log.info(`[Service Worker] bootstrap: ${Math.random()}`);
+log.info(`[Service Worker] bootstrap: (${Date.now()}`);
 
 self.addEventListener('push', function(event) {
   log.info('[Service Worker] Push Received.');
