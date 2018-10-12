@@ -9,11 +9,9 @@ self.addEventListener('push', function(event) {
   const { body, icon, badge, title } = json;
   log.info(`[Service Worker] Push had this data: `, json);
 
-  const options = {
+  event.waitUntil(self.registration.showNotification(title, {
     body,
     icon,
     badge,
-  };
-
-  event.waitUntil(self.registration.showNotification(title, options));
+  }));
 });
