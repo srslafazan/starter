@@ -1,16 +1,7 @@
 import * as log from 'loglevel'
 import runtime from 'serviceworker-webpack-plugin/lib/runtime'
 import axios from '@/constructors/axios'
-// import { getItem } from '@/constructors/localStorage'
 
-log.info('SERVICE_WORKER_APPLICATION_SERVER_KEY: ', process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY)
-
-// TODO -- move to bootstrap
-// import { DeviceUUID } from 'device-uuid'
-// const deviceProperties = new DeviceUUID();
-// const deviceUUID = deviceProperties.get();
-// console.log(deviceProperties)
-// console.log(deviceUUID)
 
 function pushSubscriptionHasExpired(sub) {
   if (!sub) return true
@@ -42,7 +33,9 @@ const registerAndSubScribe = async () => {
   }
 
   // NOTE: Development unsubscribe
-  window.pushNotificationUnsubscribe = pushSubscription.unsubscribe
+  if (process.env.NODE_ENV === 'development') {
+    window.pushNotificationUnsubscribe = pushSubscription.unsubscribe
+  }
 
   log.info('ServiceWorker PushSubscription: ', JSON.stringify(pushSubscription));
   const subscriptionResponse = await axios.post('/api/v1/push-subscriptions', {
