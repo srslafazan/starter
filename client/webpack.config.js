@@ -58,6 +58,7 @@ const config = {
     }),
     new webpack.DefinePlugin({
       'process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY': JSON.stringify(process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY || 'BHEa09WcrSPva3MOvSIXlsGRqEVlfjOvVrT-S5_T__9U9uImayVsaa7xfT8d0Cx_5A3hBIV5lB7fiCsMWdbS5mE'),
+      'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || 'http://localhost:8000'),
     }),
   ],
   resolve: {

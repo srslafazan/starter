@@ -24,6 +24,7 @@ import createReduxStore from '@/constructors/redux/store'
 import loglevel from '@/constructors/loglevel'
 import history from '@/constructors/history'
 import sw from '@/constructors/sw'
+import socket from '@/constructors/socket'
 
 import SignupPage from '@/pages/SignupPage'
 import LoginPage from '@/pages/LoginPage'
