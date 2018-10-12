@@ -1,0 +1,58 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: reverse-proxy-production
+  name: reverse-proxy-production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: reverse-proxy-production
+  template:
+    metadata:
+      labels:
+        run: reverse-proxy-production
+    spec:
+      containers:
+      - name: reverse-proxy-production
+        image: gcr.io/scale-innovations/scale/reverse-proxy-production:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 80
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: reverse-proxy-production
+  name: reverse-proxy-production
+  # annotations:
+  #   service.alpha.kubernetes.io/app-protocols: '{"443":"HTTPS"}'
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  selector:
+    run: reverse-proxy-production
+  type: LoadBalancer

@@ -1,0 +1,47 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: scale-certificate-production
+  namespace: default
+spec:
+  secretName: scale-certificate-production
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: scale
+  dnsNames:
+  - www.jamm.work
+  - www.jamm.space
+  - www.shain.xyz
+  acme:
+    config:
+    - http01:
+        ingress: scale-ingress
+      domains:
+      - www.jamm.work
+      - jamm.work
+      - www.shain.xyz
+      - shain.xyz
+      - www.jamm.space
+      - jamm.space
+# ---
+# apiVersion: certmanager.k8s.io/v1alpha1
+# kind: Certificate
+# metadata:
+#   name: scale-certificate-staging
+#   namespace: default
+# spec:
+#   secretName: scale-certificate
+#   issuerRef:
+#     name: letsencrypt-staging
+#     kind: ClusterIssuer
+#   commonName: www.jamm.work
+#   dnsNames:
+#   - www.jamm.work
+#   acme:
+#     config:
+#     - http01:
+#         ingress: scale-ingress
+#       domains:
+#       - www.jamm.work

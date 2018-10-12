@@ -1,0 +1,49 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: scale-ingress
+  annotations:
+    # kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.global-static-ip-name: "scale-innovations"
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/ingress.class: gce
+    # kubernetes.io/ingress.class: addon-http-application-routing
+    certmanager.k8s.io/cluster-issuer: letsencrypt-production
+    # nginx.ingress.kubernetes.io/rewrite-target: /
+    # ingress.gcp.kubernetes.io/pre-shared-cert: 'scale-certificate'
+    # kubernetes.io/ingress.class: gce-multi-cluster
+spec:
+  tls:
+  - secretName: scale-certificate-production
+    hosts:
+    - www.jamm.work
+    - www.shain.xyz
+    - www.jamm.space
+  backend:
+    serviceName: reverse-proxy-production
+    servicePort: 80
+  rules:
+    - host: www.jamm.work
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: reverse-proxy-production
+            servicePort: 80
+  rules:
+    - host: www.shain.xyz
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: reverse-proxy-production
+            servicePort: 80
+  rules:
+    - host: www.jamm.space
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: reverse-proxy-production
+            servicePort: 80

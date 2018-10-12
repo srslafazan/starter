@@ -1,0 +1,5 @@
+---
+ingressShim.defaultIssuerName: letsencrypt-production
+ingressShim.defaultIssuerKind: ClusterIssuer
+# ingressShim.rbac.create: false
+# ingressShim.serviceAccount.create: false

@@ -1,0 +1,69 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: gateway-production
+  name: gateway-production
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: gateway-production
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: gateway-production
+    spec:
+      containers:
+      - name: gateway-production
+        image: gcr.io/scale-innovations/scale/gateway-production:latest
+        imagePullPolicy: Always
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+        ports:
+        - containerPort: 9011
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 9011
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 9011
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+      volumes:
+      - name: cloudsql-instance-credentials
+        secret:
+          secretName: cloudsql-instance-credentials
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: gateway-production
+  name: gateway-production
+spec:
+  ports:
+  - protocol: TCP
+    port: 9011
+    targetPort: 9011
+  selector:
+    run: gateway-production
+  type: NodePort
