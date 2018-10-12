@@ -1,4 +1,3 @@
-import * as log from 'loglevel'
 import runtime from 'serviceworker-webpack-plugin/lib/runtime'
 import axios from '@/constructors/axios'
 
@@ -21,7 +20,6 @@ function urlBase64ToUint8Array(base64String) {
 
 const registerAndSubScribe = async () => {
   const registration = await runtime.register()
-  log.info('ServiceWorker runtime registration: ', registration);
   const subscribeOptions = {
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY),
