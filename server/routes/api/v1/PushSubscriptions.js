@@ -12,13 +12,14 @@ module.exports = ({ sequelize, models }) => {
   })
 
   router.get('/test', async (req, res) => {
+    if (process.env.NODE_ENV !== 'development') return res.status(403).end()
     const { subscription } = await PushSubscriptions.findOne({ where: { id: 3 } });
     console.log(subscription)
     sendNotification(subscription, JSON.stringify({
       title: 'Push - Starter',
-      body: `Test push (${Math.random()})`,
+      body: `Test push (${Date.now()})`,
       icon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5qg3HdPdJLW6cXIWOVIIPwx1K9oKaMarnznq9f6VNbqNKas_v',
-      // badge: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5qg3HdPdJLW6cXIWOVIIPwx1K9oKaMarnznq9f6VNbqNKas_v',
+      badge: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT5qg3HdPdJLW6cXIWOVIIPwx1K9oKaMarnznq9f6VNbqNKas_v',
     }))
     return res.status(200).end();
   });
