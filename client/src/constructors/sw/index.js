@@ -37,11 +37,9 @@ const registerAndSubScribe = async () => {
     window.pushNotificationUnsubscribe = pushSubscription.unsubscribe
   }
 
-  log.info('ServiceWorker PushSubscription: ', JSON.stringify(pushSubscription));
   const subscriptionResponse = await axios.post('/api/v1/push-subscriptions', {
     subscription: pushSubscription,
   })
-  log.info('ServiceWorker subscriptionResponse: ', subscriptionResponse);
 }
 
 if ('serviceWorker' in navigator) {
