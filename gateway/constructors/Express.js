@@ -33,16 +33,21 @@ const Express = () => {
   const accessLogStream = rfs('access.log', logStreamConfig);
   const errorLogStream = rfs('error.log', logStreamConfig);
 
-  app.use('/graphql', cors(), GraphQL);
+  if (process.env.NODE_ENV === 'development') {
+    app.use(cors());
+    app.use('/graphql', cors(), GraphQL);
+  } else {
+    app.use('/graphql', GraphQL);
+  }
 
   app.use(morgan('dev', {
     skip: (req, res) => res.statusCode < 400,
-    stream: process.env === 'production' ? errorLogStream : process.stderr,
+    stream: process.env !== 'development' ? errorLogStream : process.stderr,
   }));
 
   app.use(morgan('dev', {
       skip: (req, res) => res.statusCode >= 400,
-      stream: process.env === 'production' ? accessLogStream : process.stdout,
+      stream: process.env !== 'development' ? accessLogStream : process.stdout,
   }));
 
   app.set('view engine', 'ejs')
@@ -51,7 +56,6 @@ const Express = () => {
   app.use(express.static(path.resolve(__dirname, '../public')))
   app.use(express.static(path.resolve(__dirname, '../../client/dist')))
 
-  app.use(cors());
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use(cookieParser(EXPRESS_SESSION_SECRET))
@@ -68,7 +72,7 @@ const Express = () => {
     store: sessionStore,
     saveUninitialized: true,
     cookie: {
-      secure: process.env.NODE_ENV === 'production',
+      secure: process.env.NODE_ENV !== 'development',
     },
     resave: false, // we support the touch method so per the express-session docs this should be set to false
     proxy: true, // if you do SSL outside of node.
