@@ -1,0 +1,32 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  backend:
+    serviceName: reverse-proxy-production
+    servicePort: 80
+  rules:
+    - host: www.jamm.work
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: reverse-proxy-production
+            servicePort: 80
+  rules:
+    - host: www.shain.xyz
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: reverse-proxy-production
+            servicePort: 80
+  rules:
+    - host: www.jamm.space
+      http:
+        paths:
+        - path: /
+          backend:
+            serviceName: reverse-proxy-production
+            servicePort: 80
