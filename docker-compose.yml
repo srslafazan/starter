@@ -11,15 +11,16 @@ services:
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
 
-  client:
-    build: ./client
+  webclient:
+    build: ./webclient
     ports:
       - "8080:8080"
     volumes:
-      - ./client:/app
+      - ./webclient:/app
+      - /app/node_modules # protect container node_modules from overwrite
 
-  server:
-    build: ./server
+  gateway:
+    build: ./gateway
     command: yarn dev
     ports:
       - "8000:8000"
@@ -38,7 +39,8 @@ services:
     depends_on:
       - postgres
     volumes:
-      - ./server:/app
+      - ./gateway:/app
+      - /app/node_modules # protect container node_modules from overwrite
 
   # redis:
   #   image: redis

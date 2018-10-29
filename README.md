@@ -8,8 +8,8 @@
 ## Setup
 
 ```bash
-cd client && yarn
-cd server && yarn
+cd webclient && yarn
+cd gateway && yarn
 ```
 
 ## Start
@@ -18,17 +18,18 @@ cd server && yarn
 docker-compose up --build
 ```
 > With separate local servers
-Database
+
+- Database
 ```bash
 docker-compose up postgres
 ```
-- Client
+- Webclient
 ```bash
-cd client && yarn dev
+cd webclient && yarn dev
 ```
-- Server
+- Gateway
 ```bash
-cd server && yarn dev
+cd gateway && yarn dev
 ```
 
 

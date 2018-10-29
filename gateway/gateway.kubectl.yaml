@@ -1,0 +1,66 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: gateway
+  name: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: gateway
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        run: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: gateway:latest
+        imagePullPolicy: Always
+        # resources:
+          # requests:
+            # memory: "64Mi"
+            # cpu: "100m"
+        ports:
+        - containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 10
+      # volumes:
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: gateway
+  name: gateway
+spec:
+  ports:
+  - protocol: TCP
+    port: 8000
+    targetPort: 8000
+  selector:
+    run: gateway
+  type: NodePort
