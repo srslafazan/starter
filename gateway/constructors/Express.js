@@ -11,7 +11,8 @@ const rfs = require('rotating-file-stream')
 
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
-const { sequelize } = require('./sequelize');
+const GraphQL = require('@/constructors/graphql');
+const { sequelize } = require('@/constructors/sequelize');
 
 const EXPRESS_SESSION_SECRET = process.env.EXPRESS_SESSION_SECRET || 'keyboard cat'
 const logsDirectory = path.join(__dirname, '../logs')
@@ -31,6 +32,8 @@ const Express = () => {
 
   const accessLogStream = rfs('access.log', logStreamConfig);
   const errorLogStream = rfs('error.log', logStreamConfig);
+
+  app.use('/graphql', cors(), GraphQL);
 
   app.use(morgan('dev', {
     skip: (req, res) => res.statusCode < 400,
