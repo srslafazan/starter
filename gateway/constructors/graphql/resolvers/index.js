@@ -4,6 +4,9 @@ const resolvers = ({ db }) => { // TODO: injection
     hello: () => {
       return 'Hello world!';
     },
+    world: () => {
+      return 'Hello world 2!';
+    },
     users: () => {
       return []
     },

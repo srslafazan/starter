@@ -126,3 +126,5 @@ typings/
 # Serverless directories
 .serverless
 
+# Relay generated files
+__generated__
