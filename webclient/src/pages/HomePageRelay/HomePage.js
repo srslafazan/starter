@@ -2,12 +2,18 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import axios from '@/constructors/axios';
 import socket from '@/constructors/socket';
+import environment from '@/constructors/relay/environment';
+import { createFragmentContainer, graphql, QueryRenderer } from 'react-relay'
 
-import { Link, withRouter } from 'react-router-dom'
+// import { Link, withRouter } from 'react-router-dom'
 
 import './HomePage.sass'
 
 class HomePage extends Component {
+  state = {
+
+  }
+
   async componentDidMount() {
     const usersResponse = await axios.get('http://127.0.0.1:8000/api/v1/users')
     // const grqphqlHelloResponse = await axios.post('http://127.0.0.1:8000/graphql', { query: '{ hello }' })
@@ -29,4 +35,11 @@ class HomePage extends Component {
   }
 }
 
-export default withRouter(HomePage)
+export default createFragmentContainer(
+  HomePage,
+  graphql`
+    fragment HomePage_me on User {
+      id
+    }
+  `
+)

@@ -5,11 +5,18 @@ const resolvers = ({ db }) => { // TODO: injection
       return 'Hello world!';
     },
     world: () => {
-      return 'Hello world 2!';
+      return { id: 1 };
     },
     users: () => {
       return []
     },
+    me: () => {
+      return {
+        id: 1,
+        firstName: 'Shain',
+        lastName: 'Lafazan',
+      }
+    }
   }
 }
 

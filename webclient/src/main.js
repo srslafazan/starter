@@ -8,22 +8,12 @@ import 'normalize.css'
 import React from 'react'
 import * as log from 'loglevel'
 
-// import {
-  // Router,
-  // Link,
-  // Redirect,
-  // Route,
-// } from 'react-router-dom'
-
-import { BrowserProtocol, queryMiddleware } from 'farce';
 import {
-  createFarceRouter,
-  createRender,
-  makeRouteConfig,
+  Router,
+  Link,
+  Redirect,
   Route,
-} from 'found';
-import { Resolver } from 'found-relay';
-
+} from 'react-router-dom'
 
 import { applyRouterMiddleware } from 'react-router'
 
@@ -33,7 +23,6 @@ import { Provider } from 'react-redux'
 import '@/style.sass'
 
 import createReduxStore from '@/constructors/redux/store'
-import environment from '@/constructors/relay/environment'
 import loglevel from '@/constructors/loglevel'
 import history from '@/constructors/history'
 import sw from '@/constructors/sw'
@@ -50,51 +39,31 @@ log.info(`Bootstrapping Client (Web) ... (${Date.now()})`)
 loglevel()
 
 
-const Router = createFarceRouter({
-  historyProtocol: new BrowserProtocol(),
-  historyMiddlewares: [queryMiddleware],
-  routeConfig: makeRouteConfig(
-    <Route
-      path="/"
-      Component={HomePage}
-      query={graphql`
-        query main_Query {
-          hello
-        }
-      `}
-    >
-    </Route>
-  ),
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route {...rest} render={(props) => {
+    const authenticated = true;  /* TODO - auth */
+    return (authenticated) ? <Component {...props} {...rest} /> : <Redirect to='/login' />
+    }}
+  />
+);
 
-  render: createRender({}),
-});
-
-// const PrivateRoute = ({ component: Component, ...rest }) => (
-//   <Route {...rest} render={(props) => {
-//     const authenticated = true;  /* TODO - auth */
-//     return (authenticated) ? <Component {...props} {...rest} /> : <Redirect to='/login' />
-//     }}
-//   />
-// );
 
 function App() {
+  const store = createReduxStore();
   history.listen((location, action) => {
     log.info('Routing to location: ', location);
   });
-
   return (
-    <Provider store={createReduxStore()}>
-      <Layout>
-        {/*<Route exact path="/login" component={LoginPage} />*/}
-        {/*<Route exact path="/signup" component={SignupPage} />*/}
-        {/*<PrivateRoute exact path="/" component={HomePage} />*/}
-      </Layout>
+    <Provider store={store}>
+      <Router history={history}>
+        <Layout>
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/signup" component={SignupPage} />
+          <PrivateRoute exact path="/" component={HomePage} />
+        </Layout>
+      </Router>
     </Provider>
   )
 }
 
-export function run() {
-  render(<Router resolver={new Resolver(environment)} />, document.getElementById('app'))
-}
-
-export default run
+export const run = () => render(<App />, document.getElementById('app'))
