@@ -1,14 +1,31 @@
-const winston = require("winston");
+const fs = require('fs')
+const path = require('path')
+const morgan = require('morgan')
+const rfs = require('rotating-file-stream')
 
-const level = process.env.LOGGER_LEVEL || 'debug';
+const logsDirectory = path.join(__dirname, '../logs')
 
-const logger = winston.createLogger({
-  transports: [
-    new winston.transports.Console({
-      level,
-      timestamp: () => (new Date()).toISOString(),
-    })
-  ]
-});
+const logger = {}
 
-module.exports = logger
+// ensure log directory exists
+fs.existsSync(logsDirectory) || fs.mkdirSync(logsDirectory);
+
+const logStreamConfig = {
+  interval: '1d', // rotate daily
+  compress: 'gzip', // compress rotated files
+  path: logsDirectory,
+};
+
+const accessLogStream = rfs('access.log', logStreamConfig);
+const errorLogStream = rfs('error.log', logStreamConfig);
+
+
+module.exports.outLogger = morgan('dev', {
+  skip: (req, res) => res.statusCode < 400,
+  stream: process.env.NODE_ENV !== 'development' ? errorLogStream : process.stderr,
+})
+
+module.exports.errLogger = morgan('dev', {
+  skip: (req, res) => res.statusCode >= 400,
+  stream: process.env.NODE_ENV !== 'development' ? accessLogStream : process.stdout,
+})

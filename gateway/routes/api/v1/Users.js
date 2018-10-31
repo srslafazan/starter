@@ -1,12 +1,11 @@
 const router = require('express').Router();
-const logger = require('@/constructors/logger');
 
 
 module.exports = ({ sequelize, models }) => {
   const { Users } = models;
 
   router.get('/', async (req, res) => {
-    logger.info('All Users');
+    console.log('All Users');
     try {
       return res.status(200).json(await Users.findAll({ raw: true }));
     } catch(e) {

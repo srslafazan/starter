@@ -15,8 +15,13 @@ import {
   Route,
 } from 'react-router-dom'
 
+import { applyRouterMiddleware } from 'react-router'
+
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+
+// import Relay from 'react-relay'
+// import useRelay from 'react-router-relay'
 
 import '@/style.sass'
 
@@ -45,6 +50,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   />
 );
 
+// render={applyRouterMiddleware(useRelay)}
+// environment={Relay.Store}
 
 function App() {
   const store = createReduxStore();
@@ -53,7 +60,9 @@ function App() {
   });
   return (
     <Provider store={store}>
-      <Router history={history}>
+      <Router
+        history={history}
+      >
         <Layout>
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/signup" component={SignupPage} />
@@ -64,4 +73,8 @@ function App() {
   )
 }
 
-render(<App />, document.getElementById('app'))
+export function run() {
+  render(<App />, document.getElementById('app'))
+}
+
+export default run

@@ -15,6 +15,8 @@ services:
     build: ./webclient
     ports:
       - "8080:8080"
+    environment:
+      - NODE_ENV=development
     volumes:
       - ./webclient:/app
       - /app/node_modules # protect container node_modules from overwrite
@@ -25,6 +27,7 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - NODE_ENV=development
       - POSTGRES_USER=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_HOST=postgres

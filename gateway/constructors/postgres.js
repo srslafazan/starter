@@ -1,5 +1,4 @@
 const { Client } = require('pg');
-const logger = require('./logger');
 
 const {
   url,
@@ -14,14 +13,14 @@ const connectToPostgres = async (
 ) => {
   if (attempts === 0) throw new Error('Failed to connect');
 
-  logger.info('Connecting to postgres...');
+  console.log('Connecting to postgres...');
 
   try {
     const client = new Client({ connectionString });
     const pgInterface = await client.connect();
     return pgInterface;
   } catch (e) {
-    logger.error('Error connecting to postgres: ', e);
+    console.error('Error connecting to postgres: ', e);
     await sleep(interval);
     return connectToPostgres(connectionString, attempts - 1, interval);
   }

@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "dev": "LOGGER_LEVEL=debug nodemon ./index.js",
+    "dev": "LOGGER_LEVEL=debug NODE_ENV=development nodemon ./index.js",
     "start": "LOGGER_LEVEL=info node ./index.js",
     "setup": "yarn migrate && yarn sequelize-migrate",
     "migrate": "node ./bin/migrate.js",
@@ -24,6 +24,7 @@
     "express": "^4.16.3",
     "express-graphql": "^0.7.1",
     "express-session": "^1.15.6",
+    "express-winston": "^3.0.1",
     "graphql": "^14.0.2",
     "module-alias": "^2.1.0",
     "morgan": "^1.9.0",
@@ -43,6 +44,7 @@
     "nodemon": "^1.18.4"
   },
   "_moduleAliases": {
-    "@": "."
+    "@": ".",
+    "~": "../"
   }
 }

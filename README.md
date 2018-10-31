@@ -32,6 +32,13 @@ cd webclient && yarn dev
 cd gateway && yarn dev
 ```
 
+## TODO
+- GraphQL (+Relay) constructors
+- Unit Test Framework
+- Functional (Automation) Test Framework
+- Deployment constructors
+- Web3 constructors
+- Loose linting
 
 ## License
 

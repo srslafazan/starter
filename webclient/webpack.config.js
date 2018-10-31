@@ -2,15 +2,16 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const RelayCompilerWebpackPlugin = require('relay-compiler-webpack-plugin');
 
 
 const config = {
   mode: 'development',
   entry: {
-    main: [
+    index: [
       'webpack-dev-server/client?http://0.0.0.0:8080/',
       'webpack/hot/only-dev-server',
-      path.resolve(__dirname, './src/main.js'),
+      path.resolve(__dirname, './src/index.js'),
     ],
   },
   output: {
@@ -60,18 +61,27 @@ const config = {
       'process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY': JSON.stringify(process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY || 'BHEa09WcrSPva3MOvSIXlsGRqEVlfjOvVrT-S5_T__9U9uImayVsaa7xfT8d0Cx_5A3hBIV5lB7fiCsMWdbS5mE'),
       'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || 'http://localhost:8000'),
     }),
+    new RelayCompilerWebpackPlugin({
+      schema: path.resolve(__dirname, '../gateway/constructors/graphql/schema.graphql'), // or schema.json or a GraphQLSchema instance
+      src: path.resolve(__dirname, './src'),
+    }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      '@': path.resolve('src')
+      '@': path.resolve('src'),
+      '~': path.resolve(__dirname, '../'),
     },
   },
   devServer: {
     contentBase: path.resolve(__dirname, "dist"),
     headers: { "Access-Control-Allow-Origin": "*" },
     port: 8080,
-    public: '0.0.0.0',
+    public: 'localhost',
+     proxy: {
+      '/api': 'http://localhost:8000',
+      '/graphql': 'http://localhost:8000',
+    },
   },
   devtool: '#eval-source-map',
 };
