@@ -40,9 +40,7 @@ module.exports = async () => {
     }
   }
 
-  if (packages.express.routes) {
-    app.use('/', require('./routes'));
-  }
+  if (packages.express.routes) app.use('/', require('./routes'));
 
   return app
 }

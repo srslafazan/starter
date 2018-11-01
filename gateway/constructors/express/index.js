@@ -1,11 +1,11 @@
 const http = require('http')
 const Express = require('./express')
-const { packages, options } = require('@/config')
+const { packages } = require('@/config')
 const PORT = process.env.PORT || packages.express.port || 8000;
 
 const startExpressServer = async () => {
   const app = await Express()
-  if (packages.express.apollo) {
+  if (packages.express['apollo-server-express']) {
     const apolloServer = require('./apollo-server-express')
     apolloServer.run({ app })
   }
@@ -16,7 +16,7 @@ const startExpressServer = async () => {
 const run = async () => {
   const [server, app] = await startExpressServer()
 
-  if (packages.express.apollo) {
+  if (packages.express['apollo-server-express']) {
     require('./apollo-server-express/apollo-server-express').installSubscriptionHandlers(server)
   }
   if (packages.express.sockets) {
@@ -34,9 +34,11 @@ const run = async () => {
 
   server.listen(PORT, async () => {
     console.log(`Express server listening on port ${PORT}`)
-    console.log(`${server.graphqlPath}`)
     if (packages.express.postgres) {
       await require(`@/constructors/postgres`)();
+    }
+    if (packages.express.redis) {
+      await require(`@/constructors/redis`)();
     }
   });
 

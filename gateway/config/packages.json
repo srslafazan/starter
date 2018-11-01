@@ -1,8 +1,11 @@
 {
   "express": {
-    "apollo": true,
-    "routes": true,
+    "apollo-server-express": true,
+    "express-session": true,
     "graphql-express": false,
-    "express-session": true
+    "postgres": true,
+    "redis": false,
+    "routes": true,
+    "sequelize": true
   }
 }

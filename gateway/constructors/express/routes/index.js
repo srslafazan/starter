@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === 'development') {
   router.use('/api', APIRouter);
 }
 
-router.get('*', function (req, res) {
+router.get('/api/*', function (req, res) {
   res.status(404).send();
 });
 
