@@ -13,4 +13,4 @@ web3 = new Web3(new Web3.providers.HttpProvider("http://mainnet.infura.io/v3/22c
 // web3.eth.subscribe('newBlockHeaders', (error, result) => console.log(error, result))
 module.exports = web3
 // const contract = new web3.eth.Contract(gameABI, game.contract);
-//   return contract.events.Transfer({}, async (err, event) => {
+// return contract.events.Transfer({}, async (err, event) => {

@@ -27,6 +27,7 @@ import loglevel from '@/constructors/loglevel'
 import history from '@/constructors/history'
 import sw from '@/constructors/sw'
 import socket from '@/constructors/socket'
+import web3 from '@/constructors/web3'
 
 import SignupPage from '@/pages/SignupPage'
 import LoginPage from '@/pages/LoginPage'

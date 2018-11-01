@@ -2,8 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-// const RelayCompilerWebpackPlugin = require('relay-compiler-webpack-plugin');
-
+const { packages } = require('./src/config')
 
 const config = {
   mode: 'development',
@@ -44,6 +43,7 @@ const config = {
       {
         test: /\.(json)$/,
         loader: 'json-loader',
+        exclude: [/node_modules/, /-test\.(js|jsx)/],
       },
       {
         test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
@@ -60,14 +60,11 @@ const config = {
     new webpack.DefinePlugin({
       'process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY': JSON.stringify(process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY || 'BHEa09WcrSPva3MOvSIXlsGRqEVlfjOvVrT-S5_T__9U9uImayVsaa7xfT8d0Cx_5A3hBIV5lB7fiCsMWdbS5mE'),
       'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || 'http://localhost:8000'),
+      'process.env.WEB3_PROVIDER': JSON.stringify(process.env.WEB3_PROVIDER || 'http://localhost:8545'),
     }),
-    // new RelayCompilerWebpackPlugin({
-    //   schema: path.resolve(__dirname, '../gateway/constructors/express/express-graphql/schema.graphql'), // or schema.json or a GraphQLSchema instance
-    //   src: path.resolve(__dirname, './src'),
-    // }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx'],
+    extensions: ['.js', '.jsx', '.json'],
     alias: {
       '@': path.resolve('src'),
       '~': path.resolve(__dirname, '../'),
@@ -85,5 +82,15 @@ const config = {
   },
   devtool: '#eval-source-map',
 };
+
+if (packages.relay) {
+  config.plugins.push(
+    new require('relay-compiler-webpack-plugin')({
+      schema: path.resolve(__dirname, '../gateway/constructors/express/express-graphql/schema.graphql'), // or schema.json or a GraphQLSchema instance
+      src: path.resolve(__dirname, './src'),
+    })
+  )
+}
+
 
 module.exports = config;
