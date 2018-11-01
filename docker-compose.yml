@@ -45,7 +45,7 @@ services:
       - ./gateway:/app
       - /app/node_modules # protect container node_modules from overwrite
 
-  # redis:
-  #   image: redis
-  #   ports:
-  #       - 6379:6379
+  redis:
+    image: redis
+    ports:
+        - "6379:6379"

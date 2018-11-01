@@ -1,29 +1,21 @@
 const { Client } = require('pg');
 
+const { waitForConnection } = require('@/utils')
+
 const {
   url,
-} = require('../constants/postgres')
+} = require('@/constants/postgres')
 
-const sleep = timeout => new Promise(resolve => setTimeout(resolve, timeout));
-
-const connectToPostgres = async (
-  connectionString = url,
-  attempts = 30,
-  interval = 1000,
-) => {
-  if (attempts === 0) throw new Error('Failed to connect');
-
-  console.log('Connecting to postgres...');
-
-  try {
-    const client = new Client({ connectionString });
+const run = () => waitForConnection({
+  connect: async () => {
+    console.log('Connecting to postgres...');
+    const client = new Client({ connectionString: url });
     const pgInterface = await client.connect();
     return pgInterface;
-  } catch (e) {
-    console.error('Error connecting to postgres: ', e);
-    await sleep(interval);
-    return connectToPostgres(connectionString, attempts - 1, interval);
-  }
-};
+  },
+  onError(e) {
+    console.error('Error connecting to postgres', e)
+  },
+})
 
-module.exports = connectToPostgres;
+module.exports.run = run;

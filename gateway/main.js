@@ -2,7 +2,6 @@
  * Server (Gateway) - Bootstrap
 **/
 
-// const openrecord = require('@/constructors/openrecord')
 const packageJson = require('@/package.json')
 const { packages, options } = require('@/config')
 

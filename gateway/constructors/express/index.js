@@ -35,10 +35,10 @@ const run = async () => {
   server.listen(PORT, async () => {
     console.log(`Express server listening on port ${PORT}`)
     if (packages.express.postgres) {
-      await require(`@/constructors/postgres`)();
+      await require(`@/constructors/postgres`).run();
     }
     if (packages.express.redis) {
-      await require(`@/constructors/redis`)();
+      await require(`@/constructors/redis`).run();
     }
   });
 
