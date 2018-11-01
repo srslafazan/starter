@@ -1,0 +1,8 @@
+{
+  "express": {
+    "apollo": true,
+    "routes": true,
+    "graphql-express": false,
+    "express-session": true
+  }
+}

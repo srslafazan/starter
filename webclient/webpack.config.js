@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
-const RelayCompilerWebpackPlugin = require('relay-compiler-webpack-plugin');
+// const RelayCompilerWebpackPlugin = require('relay-compiler-webpack-plugin');
 
 
 const config = {
@@ -61,10 +61,10 @@ const config = {
       'process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY': JSON.stringify(process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY || 'BHEa09WcrSPva3MOvSIXlsGRqEVlfjOvVrT-S5_T__9U9uImayVsaa7xfT8d0Cx_5A3hBIV5lB7fiCsMWdbS5mE'),
       'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || 'http://localhost:8000'),
     }),
-    new RelayCompilerWebpackPlugin({
-      schema: path.resolve(__dirname, '../gateway/constructors/graphql/schema.graphql'), // or schema.json or a GraphQLSchema instance
-      src: path.resolve(__dirname, './src'),
-    }),
+    // new RelayCompilerWebpackPlugin({
+    //   schema: path.resolve(__dirname, '../gateway/constructors/express/express-graphql/schema.graphql'), // or schema.json or a GraphQLSchema instance
+    //   src: path.resolve(__dirname, './src'),
+    // }),
   ],
   resolve: {
     extensions: ['.js', '.jsx'],

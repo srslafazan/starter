@@ -16,6 +16,8 @@
   "author": "Shain Lafazan",
   "license": "MIT",
   "dependencies": {
+    "apollo-server": "^2.1.0",
+    "apollo-server-express": "^2.1.0",
     "body-parser": "^1.18.2",
     "connect-session-sequelize": "^5.2.2",
     "cookie-parser": "^1.4.3",

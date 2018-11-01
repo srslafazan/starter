@@ -11,7 +11,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 router.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, '@client/dist/index.html'));
+  res.status(404).send();
 });
 
 
