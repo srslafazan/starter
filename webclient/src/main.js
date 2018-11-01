@@ -49,12 +49,11 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 
 function App() {
-  const store = createReduxStore();
   history.listen((location, action) => {
     log.info('Routing to location: ', location);
   });
   return (
-    <Provider store={store}>
+    <Provider store={createReduxStore()}>
       <Router history={history}>
         <Layout>
           <Route exact path="/login" component={LoginPage} />
