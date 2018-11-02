@@ -1,7 +1,6 @@
 const path = require('path');
 const cors = require('cors');
 const router = require('express').Router();
-const sequelize = require('@/constructors/sequelize');
 const APIRouter = require('./api');
 
 if (process.env.NODE_ENV === 'development') {
@@ -13,6 +12,10 @@ if (process.env.NODE_ENV === 'development') {
 router.get('/api/*', function (req, res) {
   res.status(404).send();
 });
+
+// router.get('/*', function (req, res) {
+//   res.status(200).send('Welcome to Express');
+// });
 
 
 module.exports = router;

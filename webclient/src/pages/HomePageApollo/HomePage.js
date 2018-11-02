@@ -1,21 +1,19 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import axios from '@/constructors/axios';
-// import socket from '@/constructors/socket';
-
+import { gql } from 'apollo-boost';
+import { Query } from 'react-apollo';
 import { Link, withRouter } from 'react-router-dom'
+
+import axios from '@/constructors/axios';
+
 
 import './HomePage.sass'
 
 class HomePage extends Component {
   async componentDidMount() {
-    const usersResponse = await axios.get('http://127.0.0.1:8000/api/v1/users')
-    // const grqphqlHelloResponse = await axios.post('http://127.0.0.1:8000/graphql', { query: '{ hello }' })
-    console.log(usersResponse)
-    // console.log(grqphqlHelloResponse)
-    // console.log(socket)
+    const { data } = await axios.post('/graphql', { query: '{ books { author } }' })
+    console.log(data)
   }
-
   render() {
     const { history } = this.props;
     

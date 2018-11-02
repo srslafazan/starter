@@ -19,6 +19,7 @@ import { applyRouterMiddleware } from 'react-router'
 
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
+import { ApolloProvider } from 'react-apollo';
 
 import '@/style.sass'
 
@@ -26,12 +27,13 @@ import createReduxStore from '@/constructors/redux/store'
 import loglevel from '@/constructors/loglevel'
 import history from '@/constructors/history'
 import sw from '@/constructors/sw'
-import socket from '@/constructors/socket'
+// import socket from '@/constructors/socket'
 import web3 from '@/constructors/web3'
+import apollo from '@/constructors/apollo'
 
 import SignupPage from '@/pages/SignupPage'
 import LoginPage from '@/pages/LoginPage'
-import HomePage from '@/pages/HomePage'
+import HomePage from '@/pages/HomePageApollo'
 
 import Layout from '@/components/Layout'
 
@@ -54,6 +56,7 @@ function App() {
     log.info('Routing to location: ', location);
   });
   return (
+    <ApolloProvider client={apollo}>
     <Provider store={createReduxStore()}>
       <Router history={history}>
         <Layout>
@@ -63,6 +66,7 @@ function App() {
         </Layout>
       </Router>
     </Provider>
+    </ApolloProvider>
   )
 }
 

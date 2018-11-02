@@ -43,11 +43,16 @@ const config = {
       {
         test: /\.(json)$/,
         loader: 'json-loader',
-        exclude: [/node_modules/, /-test\.(js|jsx)/],
+        exclude: [/node_modules/],
       },
       {
         test: /\.(eot|ttf|woff|woff2)(\?\S*)?$/,
         loader: 'file-loader',
+      },
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: "javascript/auto",
       },
     ],
   },
@@ -59,12 +64,14 @@ const config = {
     }),
     new webpack.DefinePlugin({
       'process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY': JSON.stringify(process.env.SERVICE_WORKER_APPLICATION_SERVER_KEY || 'BHEa09WcrSPva3MOvSIXlsGRqEVlfjOvVrT-S5_T__9U9uImayVsaa7xfT8d0Cx_5A3hBIV5lB7fiCsMWdbS5mE'),
-      'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || 'http://localhost:8000'),
+      'process.env.SOCKET_ADDRESS': JSON.stringify(process.env.SOCKET_ADDRESS || '/'),
       'process.env.WEB3_PROVIDER': JSON.stringify(process.env.WEB3_PROVIDER || 'http://localhost:8545'),
     }),
   ],
   resolve: {
-    extensions: ['.js', '.jsx', '.json'],
+    extensions: ['.js', '.jsx', '.json'].concat(
+      [".webpack.js", ".web.js", ".mjs"] /* Fix for graqphql packages used by apollo-boost */
+    ),
     alias: {
       '@': path.resolve('src'),
       '~': path.resolve(__dirname, '../'),
@@ -78,6 +85,7 @@ const config = {
      proxy: {
       '/api': 'http://localhost:8000',
       '/graphql': 'http://localhost:8000',
+      '/socket.io': 'http://localhost:8000',
     },
   },
   devtool: '#eval-source-map',

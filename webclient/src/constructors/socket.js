@@ -1,6 +1,6 @@
 import SocketIOClient from 'socket.io-client'
 
-const socket = SocketIOClient(process.env.SOCKET_ADDRESS)
+const socket = SocketIOClient(process.env.SOCKET_ADDRESS, { transports: ['websocket'] })
 
 socket.on('connect', () => {
   console.log('[SOCKET] connected.')

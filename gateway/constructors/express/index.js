@@ -19,8 +19,10 @@ const run = async () => {
   if (packages.express['apollo-server-express']) {
     require('./apollo-server-express/apollo-server-express').installSubscriptionHandlers(server)
   }
+
   if (packages.express.sockets) {
-    const io = require('@/constructors/Sockets')(server);
+    const io = require('@/constructors/sockets')().attach(server, { serveClient: false });
+
     io.on('connection', socket => {
       console.log(`[Socket] connection. socket.id: ${socket.id}`);
       socket.on('event', data => {
@@ -35,10 +37,10 @@ const run = async () => {
   server.listen(PORT, async () => {
     console.log(`Express server listening on port ${PORT}`)
     if (packages.express.postgres) {
-      await require(`@/constructors/postgres`).run();
+      await require(`@/constructors/postgres`);
     }
     if (packages.express.redis) {
-      await require(`@/constructors/redis`).run();
+      await require(`@/constructors/redis`);
     }
   });
 
