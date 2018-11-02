@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+
+  postgres:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - ./tmp/pgdata:/var/lib/postgresql/data
+
+  webclient:
+    build: ./webclient
+    ports:
+      - "8080:8080"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./webclient:/app
+      - /app/node_modules # protect container node_modules from overwrite
+
+  gateway:
+    build: ./gateway
+    command: yarn dev
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_HOST=postgres
+      - POSTGRES_URL=postgresql://postgres:password@postgres:5432/postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DATABASE=postgres
+      - OPENRECORD_POSTGRES_HOST=postgres
+      - OPENRECORD_POSTGRES_USER=postgres
+      - OPENRECORD_POSTGRES_PASSWORD=password
+      - OPENRECORD_POSTGRES_DATABASE=postgres
+      - PUSH_SUBSCRIPTION_ENCRYPTION_KEY=push_subscription_key
+    depends_on:
+      - postgres
+    volumes:
+      - ./gateway:/app
+      - /app/node_modules # protect container node_modules from overwrite
+
+  redis:
+    image: redis
+    ports:
+        - "6379:6379"

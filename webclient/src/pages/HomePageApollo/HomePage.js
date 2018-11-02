@@ -10,19 +10,23 @@ import axios from '@/constructors/axios';
 import './HomePage.sass'
 
 class HomePage extends Component {
-  async componentDidMount() {
-    const { data } = await axios.post('/graphql', { query: '{ books { author } }' })
-    console.log(data)
-  }
   render() {
     const { history } = this.props;
     
     document.title = 'Starter - HomePage'
     console.log('this.props', this.props)
     return (
-      <div className="HomePage">
-        <h1 className="title">Home Page</h1>
-      </div>
+      <Query query={gql`{ users { firstName } }`}>
+      {({ error, loading, data }) => {
+        if (error) return 'error'
+        if (loading) return 'loading...'
+        return (
+          <div className="HomePage">
+            <h1 className="title">Home Page</h1>
+            <pre>{JSON.stringify(data)}</pre>
+          </div>
+        )
+      }}
     )
   }
 }
