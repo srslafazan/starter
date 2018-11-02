@@ -44,6 +44,7 @@ services:
       PUSH_SUBSCRIPTION_ENCRYPTION_KEY: push_subscription_key
     depends_on:
       - postgres
+      - redis
     volumes:
       - ./gateway:/app
       - /app/node_modules # protect container node_modules from overwrite

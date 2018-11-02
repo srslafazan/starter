@@ -1,7 +1,11 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const path = require('path');
-const config = require('./webpack.config')
+
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
+const common = require('./webpack.common')
 
 
 const productionConfig = {
@@ -9,33 +13,37 @@ const productionConfig = {
   entry: {
     index: path.resolve(__dirname, './src/index.js'),
   },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    filename: '[name].js',
-    publicPath: '/',
-    chunkFilename: "[id].[hash].js"
-  },
+  output: common.output,
   module: {
-    /* Rules are the same for development and production */
-    rules: config.module.rules,
+    rules: common.rules.concat([
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          "css-loader"
+        ]
+      }
+    ]),
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, './src/index.html'),
-      hash: true,
-    })
-  ],
-  resolve: {
-    extensions: ['.js', '.jsx'],
-    alias: {
-      '@': path.resolve('src')
-    },
-  },
+  plugins: common.plugins.concat([
+    new MiniCssExtractPlugin({
+      filename: "[name].css",
+      chunkFilename: "[id].css"
+    }),
+  ]),
+  resolve: common.resolve,
   performance: {
     hints: false,
   },
   optimization: {
-    minimize: true,
+    minimizer: [
+      new UglifyJsPlugin({
+        cache: true,
+        parallel: true,
+        sourceMap: true // set to true if you want JS source maps
+      }),
+      new OptimizeCSSAssetsPlugin({})
+    ]
   },
   devtool: 'nosources-source-map',
 };
