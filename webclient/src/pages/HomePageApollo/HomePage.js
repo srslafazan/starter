@@ -27,6 +27,7 @@ class HomePage extends Component {
           </div>
         )
       }}
+      </Query>
     )
   }
 }

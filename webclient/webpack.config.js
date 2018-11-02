@@ -1,8 +1,10 @@
-const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin');
+const path = require('path')
+const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const ServiceWorkerWebpackPlugin = require('serviceworker-webpack-plugin')
 const { packages } = require('./src/config')
+
+const GATEWAY_URL = process.env.GATEWAY_URL || 'http://0.0.0.0:8000'
 
 const config = {
   mode: 'development',
@@ -83,9 +85,9 @@ const config = {
     port: 8080,
     public: 'localhost',
      proxy: {
-      '/api': 'http://localhost:8000',
-      '/graphql': 'http://localhost:8000',
-      '/socket.io': 'http://localhost:8000',
+      '/api': `${GATEWAY_URL}`,
+      '/graphql': `${GATEWAY_URL}`,
+      '/socket.io': `${GATEWAY_URL}`,
     },
   },
   devtool: '#eval-source-map',
@@ -101,4 +103,4 @@ if (packages.relay) {
 }
 
 
-module.exports = config;
+module.exports = config
