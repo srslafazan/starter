@@ -29,4 +29,4 @@ RUN yarn setup
 RUN mkdir -p /app/static/
 COPY --from=builder /usr/share/webclient/dist /app/static
 
-CMD ["yarn migrate > /dev/null 2>&1", "yarn start"]
+CMD yarn start
