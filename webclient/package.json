@@ -8,6 +8,7 @@
   "scripts": {
     "dev": "webpack-dev-server --host 0.0.0.0 --hot --inline --content-base=dist --history-api-fallback",
     "start": "node server/index.js",
+    "setup": "yarn install",
     "clean": "rm -rf .dist/* && rm -rf ./node_modules",
     "build": "NODE_ENV=production node_modules/.bin/webpack --config webpack.production.js",
     "relay": "relay-compiler --src ./src --schema ../gateway/constructors/graphql/schema.graphql",

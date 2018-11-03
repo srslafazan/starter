@@ -51,7 +51,7 @@ const resolve = {
 }
 
 const plugins = [
-  new CleanWebpackPlugin(['dist']),
+  // new CleanWebpackPlugin(['dist']),
   new HtmlWebpackPlugin({
     template: path.resolve(__dirname, './src/index.html'),
     filename: 'index.html',
@@ -71,7 +71,7 @@ const plugins = [
 
 const output = {
   path: path.resolve(__dirname, 'dist'),
-  filename: '[name].[hash].js',
+  filename: '[name].js',
   publicPath: '/',
   chunkFilename: "[name].[id].[hash].js"
 }

@@ -10,6 +10,6 @@ ADD . ./app
 
 WORKDIR /app
 
-RUN yarn install
+RUN yarn setup
 
-CMD yarn start
+CMD yarn dev

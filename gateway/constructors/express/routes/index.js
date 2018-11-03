@@ -13,9 +13,9 @@ router.get('/api/*', function (req, res) {
   res.status(404).send();
 });
 
-// router.get('/*', function (req, res) {
-//   res.status(200).send('Welcome to Express');
-// });
+router.get('/', function (req, res) {
+  res.status(200).sendFile(path.join(__dirname, '../../../static/index.html'));
+});
 
 
 module.exports = router;

@@ -11,25 +11,16 @@ services:
     volumes:
       - ./tmp/pgdata:/var/lib/postgresql/data
 
-  # webclient:
-  #   build: ./webclient
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     NODE_ENV: production
-  #     GATEWAY_URL: http://gateway:8000
-  #   volumes:
-  #     - ./webclient:/app
-  #     - /app/node_modules # protect container node_modules from overwrite
-
   gateway:
-    context: ./gateway
-    dockerfile: ./gateway/Dockerfile.production
-    command: yarn dev
+    build:
+      context: ./
+      dockerfile: ./Dockerfile.gateway-with-static-webclient.production
+    command: ["yarn migrate > /dev/null 2>&1", "yarn start"]
     ports:
       - "8000:8000"
     environment:
-      NODE_ENV: development
+      NODE_ENV: production
+      GATEWAY_URL: /
       POSTGRES_USER: postgres
       POSTGRES_PORT: 5432
       POSTGRES_HOST: postgres
@@ -46,9 +37,6 @@ services:
     depends_on:
       - postgres
       - redis
-    volumes:
-      - ./gateway:/app
-      - /app/node_modules # protect container node_modules from overwrite
 
   redis:
     image: redis

@@ -33,12 +33,18 @@ cd gateway && yarn dev
 ```
 
 ## TODO
-- GraphQL (+Relay) constructors
+
+Queued
+- Authentication constructors
 - Unit Test Framework
 - Functional (Automation) Test Framework
-- Deployment constructors
-- Web3 constructors
-- Loose linting
+- Linting
+- AWS Deployment interfaces
+- Update Web3 constructors
+
+Wishlist
+- GCP Deployment interfaces
+- Relay client constructors, implementation
 
 ## License
 

@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "LOGGER_LEVEL=debug NODE_ENV=development nodemon ./index.js",
     "start": "LOGGER_LEVEL=info node ./index.js",
-    "setup": "yarn migrate",
+    "setup": "yarn install",
     "migrate": "yarn sequelize-migrate",
     "sequelize-migrate": "./node_modules/.bin/sequelize db:migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
