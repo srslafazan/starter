@@ -1,7 +1,10 @@
 {
   "express": {
     "apollo-server-express": true,
-    "express-session": true,
+    "express-session": {
+        "redis": false,
+        "postgres": true
+    },
     "graphql-express": false,
     "openrecord": false,
     "postgres": true,

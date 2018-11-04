@@ -1,7 +1,6 @@
 import runtime from 'serviceworker-webpack-plugin/lib/runtime'
 import axios from '@/constructors/axios'
 
-
 function pushSubscriptionHasExpired(sub) {
   if (!sub) return true
   if (sub.expirationTime < Date.now()) return true
@@ -41,5 +40,5 @@ const registerAndSubScribe = async () => {
 }
 
 if ('serviceWorker' in navigator) {
-  registerAndSubScribe()
+  // registerAndSubScribe()
 }

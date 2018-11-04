@@ -16,3 +16,7 @@ module.exports.waitForConnection = async ({
     return run(connectionString, attempts - 1, interval);
   }
 }
+
+module.exports.sessionFromRequest = (redis, req) => {
+  return req.session /* TODO */
+}

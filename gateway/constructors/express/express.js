@@ -27,7 +27,7 @@ module.exports = async () => {
 
   if (packages.express['express-session']) {
     app.use(session)
-    sessionStore.sync()
+    if (packages.express['express-session']['postgres']) sessionStore.sync()
   }
 
   if (packages.express['graphql-express']) {

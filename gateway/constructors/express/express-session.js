@@ -1,16 +1,37 @@
 const Session = require('express-session')
 const Sequelize = require('sequelize')
 
+const { packages } = require('@/config')
 const { sequelize } = require('@/constructors/sequelize');
 
-const SequelizeStore = require('connect-session-sequelize')(Session.Store);
 const EXPRESS_SESSION_SECRET = process.env.EXPRESS_SESSION_SECRET || 'keyboard cat'
 
-const sessionStore = new SequelizeStore({
-  db: sequelize,
-  checkExpirationInterval: 15 * 60 * 1000, // 15 minutes. The interval to cleanup expired sessions (in milliseconds).
-  expiration: 24 * 60 * 60 * 1000, // 1 day (milliseconds)
-});
+const createStore = () => {
+  if (packages.express['express-session']['postgres']) {
+    const SequelizeStore = require('connect-session-sequelize')(Session.Store);
+    store = new SequelizeStore({
+      db: sequelize,
+      checkExpirationInterval: 15 * 60 * 1000, // 15 minutes. The interval to cleanup expired sessions (in milliseconds).
+      expiration: 24 * 60 * 60 * 1000, // 1 day (milliseconds)
+    });
+  }
+
+  if (packages.express['express-session']['redis']) {
+    // TODO
+    const RedisStore = require('connect-redis')(Session)
+    store = new RedisStore({
+      // client: '',
+      host: 'host',
+      port: 6379,
+      // socket: '',
+    })
+  }
+
+  return store;
+}
+
+
+const sessionStore = createStore()
 
 const session = Session({
   secret: EXPRESS_SESSION_SECRET,
