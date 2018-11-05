@@ -1,7 +1,7 @@
 const http = require('http')
 const Express = require('./express')
 const { packages } = require('@/config')
-const PORT = process.env.PORT || packages.express.port || 8000;
+const EXPRESS_PORT = process.env.EXPRESS_PORT || packages.express.port || 8000;
 
 const startExpressServer = async () => {
   const app = await Express()
@@ -34,8 +34,8 @@ const run = async () => {
     });
   }
 
-  server.listen(PORT, async () => {
-    console.log(`Express server listening on port ${PORT}`)
+  server.listen(EXPRESS_PORT, async () => {
+    console.log(`Express server listening on EXPRESS_PORT ${EXPRESS_PORT}`)
     if (packages.express.postgres) {
       await require(`@/constructors/postgres`);
     }

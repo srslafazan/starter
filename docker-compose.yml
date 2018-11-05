@@ -17,6 +17,7 @@ services:
       - "8080:8080"
     environment:
       NODE_ENV: development
+      DEPLOYED_ENV: local
       GATEWAY_URL: http://gateway:8000
     volumes:
       - ./webclient:/app
@@ -29,6 +30,8 @@ services:
       - "8000:8000"
     environment:
       NODE_ENV: development
+      DEPLOYED_ENV: local
+      EXPRESS_PORT: 8000
       WS_GETH_SERVER: ws://docker.for.mac.localhost:8546
       POSTGRES_USER: postgres
       POSTGRES_PORT: 5432
