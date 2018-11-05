@@ -1,6 +1,6 @@
 const { ApolloServer } = require('apollo-server-express');
 const { sequelize, models } = require('@/constructors/sequelize');
-const redis = require('@/constructors/redis');
+const { packages } = require('@/config')
 
 const typeDefs = require('./typeDefs');
 const resolvers = require('./resolvers');
@@ -14,7 +14,7 @@ const apolloServerExpress = new ApolloServer({
     return {
       req,
       res,
-      redis,
+      redis: packages.express.redis ? require('@/constructors/redis') : null,
       sequelize,
       models,
       session: { user },
