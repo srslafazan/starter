@@ -8,7 +8,7 @@
     "graphql-express": false,
     "openrecord": false,
     "postgres": true,
-    "redis": true,
+    "redis": false,
     "routes": true,
     "sequelize": true,
     "sockets": false
