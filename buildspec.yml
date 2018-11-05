@@ -4,25 +4,25 @@ phases:
   pre_build:
     commands:
       - echo Logging in to Amazon ECR...
-      # - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
       - echo Build started on `date`
       - echo Building the Docker image...
-      # - docker -f Dockerfile.gateway-with-static-webclient.production build -t $IMAGE_REPO_NAME:$IMAGE_TAG
-      # - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - docker -f Dockerfile.gateway-with-static-webclient.production build -t $IMAGE_REPO_NAME:$IMAGE_TAG .
+      - docker tag $IMAGE_REPO_NAME:$IMAGE_TAG $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker image to ECR Repo...
-      # - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
-      # - printf '[{"name":"TruestedLifeGateway","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
-      # - cat imagedefinitions.json
-      # - echo "Running migrations"
+      - docker push $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG
+      - printf '[{"name":"TruestedLifeGateway","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
+      - echo "Running migrations ... (TODO)"
       # - docker run -t -e "PG_URL=$PG_URL" $IMAGE_REPO_NAME:$IMAGE_TAG yarn run migrate
-# artifacts:
-    # files: 
-      # - imagedefinitions.json
+artifacts:
+    files: 
+      - imagedefinitions.json
 
 # cache:
 #   paths:
