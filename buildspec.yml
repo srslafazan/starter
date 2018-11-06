@@ -19,7 +19,7 @@ phases:
       - printf '[{"name":"TruestedLifeGateway","imageUri":"%s"}]' $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com/$IMAGE_REPO_NAME:$IMAGE_TAG > imagedefinitions.json
       - cat imagedefinitions.json
       - echo "Running migrations ... (TODO)"
-      # - docker run -t -e "PG_URL=$PG_URL" $IMAGE_REPO_NAME:$IMAGE_TAG yarn run migrate
+      - docker run -t -e "PG_URL=$PG_URL" $IMAGE_REPO_NAME:$IMAGE_TAG yarn run migrate
 artifacts:
     files: 
       - imagedefinitions.json
