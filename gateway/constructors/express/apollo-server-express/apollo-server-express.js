@@ -10,7 +10,7 @@ const apolloServerExpress = new ApolloServer({
   typeDefs,
   resolvers,
   context: ({ req, res }) => {
-    const user = sessionFromRequest(redis, req);
+    const user = sessionFromRequest({}, req);
     return {
       req,
       res,
